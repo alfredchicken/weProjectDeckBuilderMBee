@@ -26,15 +26,15 @@ const cardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    cardclass: {
-      type: String,
-      required: true,
-    },
     rarity: {
       type: String,
       required: true,
     },
     cardtype: {
+      type: String,
+      required: true,
+    },
+    tribe: {
       type: String,
       required: true,
     },

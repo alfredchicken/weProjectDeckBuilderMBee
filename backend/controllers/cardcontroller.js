@@ -14,17 +14,7 @@ export const getCards = async (req, res) => {
 export const createCard = async (req, res) => {
   const card = req.body;
 
-  if (
-    !card.name ||
-    !card.cardID ||
-    !card.type ||
-    !card.attack ||
-    !card.playcost ||
-    !card.imgURL ||
-    !card.cardclass ||
-    !card.rarity ||
-    !card.cardtype
-  ) {
+  if (!card.name || !card.cardID || !card.type || !card.attack || !card.playcost || !card.imgURL || !card.rarity || !card.tribe || !card.cardtype) {
     return res.status(400).json({ message: "All Fields are requirde" });
   }
 
