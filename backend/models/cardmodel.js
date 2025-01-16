@@ -38,6 +38,10 @@ const cardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    flipover: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true, // this will add createdAt and updatedAt fields to the schema

@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import User from "../models/usersmodel.js";
+import bcrypt from "bcryptjs";
 
 // handling Users
+
 export const getUser = async (req, res) => {
   try {
     const users = await User.find({});
@@ -13,20 +15,24 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const user = req.body;
+  const { name, password } = req.body;
 
-  if (!user.name || !user.password) {
-    return res.status(400).json({ message: "All Fields are required" });
+  if (!name || !password) {
+    return res.status(400).json({ message: "Name and password are required" });
   }
 
-  const newUser = new User(user);
-
   try {
+    // hash password with bcrypt
+    const salt = await bcrypt.genSalt(10); // generate a salt > A salt is a random string of characters and is added to a password before it is hashed
+    const hashedPassword = await bcrypt.hash(password, salt); // Has password > Hashing means that data (e.g. a password) is converted into a unique, fixed value using a mathematical algorithm
+
+    const newUser = new User({ name, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ success: true, data: newUser });
-  } catch {
-    console.error("Error saving User to database");
-    res.status(500).json({ success: false, message: "Server Error" });
+
+    res.status(201).json({ success: true, message: "User created!" });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -49,45 +55,59 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { name } = req.params;
-  const user = req.body;
+  const { password, ...rest } = req.body; // exctract password from body
 
   try {
-    const updatedUser = await User.findOneAndUpdate({ name }, user, { new: true });
+    const updates = { ...rest };
 
-    if (!updateUser) {
+    // new password?
+    if (password) {
+      console.log("Hashing new password...");
+      const salt = await bcrypt.genSalt(10);
+      updates.password = await bcrypt.hash(password, salt);
+    }
+    const updatedUser = await User.findOneAndUpdate({ name }, updates, { new: true });
+    if (!updatedUser) {
       return res.status(404).json({ success: false, message: "User not found!" });
     }
-
-    res.status(200).json({ success: true, data: updateUser });
+    res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
-    console.error("Error updating user in database");
+    console.error("Error updating user:", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-// User login
+// handling login
+
 export const loginUser = async (req, res) => {
   const { name, password } = req.body;
 
   if (!name || !password) {
-    return res.status(400).json({ message: "Name and password are required." });
+    console.log("Missing name or password");
+    return res.status(400).json({ message: "Name and password are required" });
   }
 
   try {
-    const user = await User.findOne({ name });
+    const user = await User.findOne({ name }); // Benutzer suchen
     console.log("User found:", user);
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid username or password." });
-    }
-
-    if (user.password === password) {
-      return res.status(200).json({ message: "Successful Login!" });
-    } else {
+      console.log("User not found");
       return res.status(401).json({ message: "Invalid username or password" });
     }
+
+    // Passwort überprüfen
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("Password match:", isMatch);
+
+    if (!isMatch) {
+      console.log("Incorrect password");
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    res.status(200).json({ message: "Successful Login!" });
   } catch (error) {
-    console.error("Error in Userlogin.", error);
-    return res.status(500).json({ message: "Server Error" });
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
