@@ -11,6 +11,7 @@ export const getCards = async (req, res) => {
   }
 };
 
+// Post
 export const createCard = async (req, res) => {
   const card = req.body;
 
