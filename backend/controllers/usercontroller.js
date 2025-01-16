@@ -88,8 +88,8 @@ export const loginUser = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ name }); // Benutzer suchen
-    console.log("User found:", user);
+    const user = await User.findOne({ name });
+    console.log("User found!");
 
     if (!user) {
       console.log("User not found");
@@ -98,7 +98,6 @@ export const loginUser = async (req, res) => {
 
     // Passwort überprüfen
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match:", isMatch);
 
     if (!isMatch) {
       console.log("Incorrect password");
