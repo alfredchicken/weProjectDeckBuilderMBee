@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const deckSchema = new mongoose.Schema(
   {
     name: {
-      type: String, // name of the deck
+      type: String,
       required: true,
     },
     cards: [
@@ -14,7 +14,7 @@ const deckSchema = new mongoose.Schema(
       },
     ],
     createdBy: {
-      type: String, // name of user
+      type: String,
       required: false,
     },
   },

@@ -1,5 +1,6 @@
 import Card from "../models/cardmodel.js";
 import mongoose from "mongoose";
+import cardSchema from "../models/cardvalidation.js";
 
 export const getCards = async (req, res) => {
   try {
@@ -13,13 +14,16 @@ export const getCards = async (req, res) => {
 
 // Post
 export const createCard = async (req, res) => {
-  const card = req.body;
+  const { error } = cardSchema.validate(req.body, { abortEarly: false });
 
-  if (!card.name || !card.cardID || !card.type || !card.attack || !card.playcost || !card.imgURL || !card.rarity || !card.tribe || !card.cardtype) {
-    return res.status(400).json({ message: "All Fields are requirde" });
+  if (error) {
+    return res.status(400).json({
+      message: "Validation Error",
+      details: error.details.map((detail) => detail.message),
+    });
   }
 
-  const newCard = new Card(card);
+  const newCard = new Card(req.body);
 
   try {
     await newCard.save();
@@ -52,6 +56,15 @@ export const deleteCard = async (req, res) => {
 export const updateCard = async (req, res) => {
   const { cardID } = req.params;
   const card = req.body;
+
+  const { error } = cardSchema.validate(card, { abortEarly: false });
+
+  if (error) {
+    return res.status(400).json({
+      message: "Validation Error",
+      details: error.details.map((detail) => detail.message),
+    });
+  }
 
   try {
     const updatedCard = await Card.findOneAndUpdate({ cardID }, card, { new: true });
