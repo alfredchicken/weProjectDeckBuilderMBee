@@ -5,11 +5,17 @@ import cardRoutes from "./routes/cardroute.js";
 import deckRoutes from "./routes/deckroute.js";
 import userRoutes from "./routes/userroute.js";
 import userModel from "./models/usersmodel.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
