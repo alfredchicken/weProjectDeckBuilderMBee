@@ -14,6 +14,10 @@ export const getCards = async (req, res) => {
 
 // Post
 export const createCard = async (req, res) => {
+  // automatische Umwandlung: string -> array, weil ich später zwei farbige Kartentypen erstellt habe
+  if (typeof req.body.type === "string") {
+    req.body.type = [req.body.type];
+  }
   const { error } = cardSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
@@ -56,6 +60,10 @@ export const deleteCard = async (req, res) => {
 export const updateCard = async (req, res) => {
   const { cardID } = req.params;
   const card = req.body;
+
+  if (typeof card.type === "string") {
+    card.type = [card.type];
+  }
 
   const { error } = cardSchema.validate(card, { abortEarly: false });
 

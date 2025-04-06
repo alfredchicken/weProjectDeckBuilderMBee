@@ -3,7 +3,7 @@ import Joi from "joi";
 const cardSchema = Joi.object({
   cardID: Joi.string().required(),
   name: Joi.string().required(),
-  type: Joi.string().required(),
+  type: Joi.alternatives().try(Joi.string(), Joi.array().items(Joi.string())).required(),
   attack: Joi.number().required(),
   playcost: Joi.number().required(),
   imgURL: Joi.string().required(),

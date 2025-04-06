@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CardPool from "../components/CardPool.jsx";
 import { fetchCards } from "../api/api.js";
+import CardModal from "../components/CardModal.jsx";
 
 const DeckBuilder = () => {
   const [cardPool, setCardPool] = useState([]);
@@ -18,6 +19,7 @@ const DeckBuilder = () => {
   return (
     <div>
       <CardPool cards={cardPool} onSelect={setSelectedCard} />
+      <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} />
     </div>
   );
 };

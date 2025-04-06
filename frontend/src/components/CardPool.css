@@ -1,0 +1,19 @@
+.card-pool-container {
+  padding: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.img-pool:hover {
+  transform: scale(1.05);
+  transition: transform 0.1s ease;
+  box-shadow: rgb(251, 251, 251) 0px 0 4px;
+}
