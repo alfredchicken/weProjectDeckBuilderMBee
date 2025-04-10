@@ -17,8 +17,8 @@
   color: #000;
   padding: 20px;
   border-radius: 8px;
-  max-width: 250px;
-  width: 50%;
+  max-width: 350px;
+  width: 70%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   transform: scale(0.95);
@@ -34,6 +34,11 @@
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+/* Background colors für Kartentyp */
+.ultra {
+  background-color: red;
 }
 
 /* Animations */

@@ -44,7 +44,7 @@ const cardSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // this will add createdAt and updatedAt fields to the schema
+    timestamps: true, // fügt Zeitstempel hinzu
   }
 );
 

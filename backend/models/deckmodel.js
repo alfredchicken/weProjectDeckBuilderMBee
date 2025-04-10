@@ -8,7 +8,7 @@ const deckSchema = new mongoose.Schema(
     },
     cards: [
       {
-        type: mongoose.Schema.Types.ObjectId, // objectID of card to reference to cards database
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Card",
         required: true,
       },
@@ -19,7 +19,7 @@ const deckSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // createdAt and updatedAt fields
+    timestamps: true, // Zeitsempel
   }
 );
 

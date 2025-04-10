@@ -7,14 +7,14 @@ export const getCards = async (req, res) => {
     const cards = await Card.find({});
     res.status(200).json({ success: true, data: cards });
   } catch (error) {
-    console.log("Error fetching cards from database");
+    console.log("Fehler beim Laden der Karten von der Datenbank");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-// Post
+// Post - Karte erstellen
 export const createCard = async (req, res) => {
-  // automatische Umwandlung: string -> array, weil ich später zwei farbige Kartentypen erstellt habe
+  // automatische Umwandlung: string zu array, weil ich später mehr als nur einfarbige Kartentypen erstellt habe.
   if (typeof req.body.type === "string") {
     req.body.type = [req.body.type];
   }
@@ -33,32 +33,32 @@ export const createCard = async (req, res) => {
     await newCard.save();
     res.status(201).json({ success: true, data: newCard });
   } catch {
-    console.error("Error saving card to database");
+    console.error("Fehler beim speichern der Karte auf die Datenbank");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-// Search for cardID makes more sense for me then to search for ObjectID
+// Karte löschen
 export const deleteCard = async (req, res) => {
-  const { cardID } = req.params;
+  const { cardID } = req.params; // Suche nach Karten ID macht mehr Sinn als nach MongoDB ObjectID
 
   try {
     const result = await Card.deleteOne({ cardID });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ success: false, message: "Card not found!" });
+      return res.status(404).json({ success: false, message: "Karte wurde in der DB nicht gefunden!" });
     }
 
-    res.json({ success: true, message: "Card deleted!" });
+    res.json({ success: true, message: "Karte erfolgreich gelöscht!" });
   } catch (error) {
-    console.error("Error deleting card from database");
+    console.error("Fehler beim Löschen der Karte aus der Datenbank");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-// Update via cardID makes more sense for me then to update via ObjectID
+// Karte aktualisieren
 export const updateCard = async (req, res) => {
-  const { cardID } = req.params;
+  const { cardID } = req.params; // Update via CardID macht mehr Sinn als MongoDB ObjectID
   const card = req.body;
 
   if (typeof card.type === "string") {

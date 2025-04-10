@@ -2,14 +2,14 @@ import "./CardModal.css";
 
 const CardModal = ({ card, onClose }) => {
   if (!card) {
-    return null; // Don't render anything if no card is selected
+    return null; // nicht wird angezeigt, wenn keine Karte übergeben wird
   }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
-        className={`modal-content ${card.type}`}
-        // Prevents, that a click on the modal content closes the modal
+        className={`modal-content ${card.rarity.toLowerCase()}`}
+        // Verhindert, dass bei Klick LightBox(Modal)  geschlossen wird
         onClick={(e) => e.stopPropagation()}
       >
         <img src={card.imgURL} alt={card.name} className="modal-img" />
@@ -19,4 +19,4 @@ const CardModal = ({ card, onClose }) => {
 };
 
 export default CardModal;
-// modal is like a lightbox
+// modal ist wie eine LightBox

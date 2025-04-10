@@ -8,17 +8,17 @@ export const createDeck = async (req, res) => {
   if (!name || !Array.isArray(cards) || cards.length !== 50) {
     return res.status(400).json({
       success: false,
-      message: "Name and exactly 50 cards are required for a Deck!",
+      message: "Name und exakt 50 Karten sind für ein Deck nötig!",
     });
   }
 
   try {
-    const invalidCards = cards.filter((cardId) => !mongoose.Types.ObjectId.isValid(cardId)); //check if iD is valid
+    const invalidCards = cards.filter((cardId) => !mongoose.Types.ObjectId.isValid(cardId)); //prüft, ob die cardId eine gültige ObjectId ist
 
     if (invalidCards.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "One or more card ObjectIds are invalid.",
+        message: "Eine oder mehr ObjectIDs sind ungültig.",
         invalidCardIDs: invalidCards,
       });
     }
@@ -29,12 +29,12 @@ export const createDeck = async (req, res) => {
     res.status(201).json({
       success: true,
       data: savedDeck,
-      message: "Deck successfully saved!",
+      message: "Deck gespeichert!",
     });
   } catch (error) {
-    console.error("Error saving deck to database:", error);
+    console.error("Fehler beim speichern des Decks in die Datenbank", error);
 
-    res.status(500).json({ success: false, message: "Server error while saving deck." });
+    res.status(500).json({ success: false, message: "Server error während dem Deck speichern." });
   }
 };
 
@@ -43,7 +43,7 @@ export const getDecks = async (req, res) => {
     const decks = await Deck.find({}).populate("cards");
     res.status(200).json({ success: true, data: decks });
   } catch (error) {
-    console.error("Error fetching decks from database", error);
+    console.error("Fehler beim laden des Decks von der Datenbank", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -57,13 +57,13 @@ export const deleteDeck = async (req, res) => {
     const deletedDeck = await Deck.findByIdAndDelete(_id);
 
     if (!deletedDeck) {
-      return res.status(404).json({ success: false, message: "Deck not found!" });
+      return res.status(404).json({ success: false, message: "Deck nicht gefunden!" });
     }
 
-    res.status(200).json({ success: true, message: "Deck deleted!" });
+    res.status(200).json({ success: true, message: "Deck gelöscht!" });
   } catch (error) {
-    console.error("Error deleting deck from database:", error);
-    res.status(500).json({ success: false, message: "Server error while deleting deck." });
+    console.error("Fehler beim löschen des Decks von der Datenbank:", error);
+    res.status(500).json({ success: false, message: "Server error während dem Löschen des Decks." });
   }
 };
 
@@ -74,7 +74,7 @@ export const updateDeck = async (req, res) => {
   if (!name || !Array.isArray(cards) || cards.length !== 50) {
     return res.status(400).json({
       success: false,
-      message: "Name and exactly 50 cards are required for a Deck!",
+      message: "Name und exakt 50 Karten sind für ein Deck nötig!",
     });
   }
 
@@ -84,21 +84,21 @@ export const updateDeck = async (req, res) => {
     if (invalidCards.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "One or more card ObjectIds are invalid.",
+        message: "Eine oder mehr ObjectIDs sind ungültig.",
         invalidCardIDs: invalidCards,
       });
     }
 
-    const updatedDeck = await Deck.findByIdAndUpdate(id, { name, cards }, { new: true }).populate("cards"); // import carddetails from other collection (cards) on mongoDB
+    const updatedDeck = await Deck.findByIdAndUpdate(id, { name, cards }, { new: true }).populate("cards"); // importiert Kartendetails von einer anderen Collection (cards) auf mongoDB
 
     if (!updatedDeck) {
-      return res.status(404).json({ success: false, message: "Deck not found!" });
+      return res.status(404).json({ success: false, message: "Deck nicht gefunden!" });
     }
 
     res.status(200).json({ success: true, data: updatedDeck });
   } catch (error) {
-    console.error("Error updating deck in database:", error);
+    console.error("Fehler beim Updaten des Decks in der DB:", error);
 
-    res.status(500).json({ success: false, message: "Server error while updating deck." });
+    res.status(500).json({ success: false, message: "Fehler während dem Updaten vom Deck." });
   }
 };
