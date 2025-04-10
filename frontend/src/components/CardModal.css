@@ -97,6 +97,11 @@ ul {
   border-radius: 8px;
 }
 
+.add-to-deck {
+  margin-top: 1rem;
+  text-align: center;
+}
+
 /* Animations */
 
 @keyframes fadeIn {

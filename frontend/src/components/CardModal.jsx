@@ -2,7 +2,7 @@ import "./CardModal.css";
 import React, { useEffect, useRef } from "react";
 import VanillaTilt from "vanilla-tilt";
 
-const CardModal = ({ card, onClose }) => {
+const CardModal = ({ card, onClose, onAddToDeck }) => {
   const tiltRef = useRef(null);
 
   useEffect(() => {
@@ -37,6 +37,9 @@ const CardModal = ({ card, onClose }) => {
             </>
           )}
         </div>
+        <button className="add-to-deck" onClick={() => onAddToDeck(card)}>
+          Add to Deck
+        </button>
       </div>
     </div>
   );

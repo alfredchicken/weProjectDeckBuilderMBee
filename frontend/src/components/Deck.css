@@ -1,0 +1,52 @@
+.deck-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: 100vh;
+}
+
+.deck-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.deck-cards {
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
+  justify-content: start;
+  gap: 0.1rem;
+}
+
+.card {
+  border-radius: 6px;
+  padding: 0.5rem;
+  transition: transform 0.2s ease;
+  max-width: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card.fade-out {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.card:hover .img-pool {
+  cursor: pointer;
+  border-raidus: 6px;
+  transform: scale(1.05);
+  box-shadow: 0 0px 4px rgba(255, 255, 255, 0.726);
+}
+
+.img-pool {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}

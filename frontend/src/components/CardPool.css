@@ -1,5 +1,17 @@
 .card-pool-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   padding: 1rem;
+  height: 100vh;
+}
+
+.card-pool-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .filter-bar {
@@ -9,27 +21,44 @@
   margin-bottom: 1rem;
 }
 
+.card-size-slider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
+}
+
 .filter-bar select,
 .filter-bar input {
   padding: 0.5rem;
   min-width: 140px;
 }
 
+.filter-search {
+  width: 25%;
+}
+
 .cards-container {
+  overflow-y: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
+  justify-content: start;
+  gap: 0.1rem;
 }
 
 .card {
   border-radius: 6px;
   padding: 0.5rem;
-  text-align: center;
   transition: transform 0.2s ease;
+  max-width: 100%;
 }
 
 .card:hover .img-pool {
   cursor: pointer;
+  border-raidus: 6px;
   transform: scale(1.05);
   box-shadow: 0 0px 4px rgba(255, 255, 255, 0.726);
 }
@@ -38,6 +67,5 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  max-height: 160px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }

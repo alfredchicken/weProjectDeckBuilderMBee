@@ -1,0 +1,10 @@
+.deckbuilder-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.half {
+  flex: 1;
+  overflow: hidden;
+}

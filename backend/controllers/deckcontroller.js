@@ -3,6 +3,8 @@ import Card from "../models/cardmodel.js";
 import mongoose from "mongoose";
 
 export const createDeck = async (req, res) => {
+  console.log("POST /api/decks → req.body:", req.body);
+
   const { name, cards } = req.body;
 
   if (!name || !Array.isArray(cards) || cards.length !== 50) {
