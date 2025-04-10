@@ -1,0 +1,1 @@
+Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi, react-router-dom

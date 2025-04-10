@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CardPool from "../components/CardPool.jsx";
 import { fetchCards } from "../api/api.js";
 import CardModal from "../components/CardModal.jsx";
+import Deck from "./Deck";
 
 const DeckBuilder = () => {
   const [cardPool, setCardPool] = useState([]);

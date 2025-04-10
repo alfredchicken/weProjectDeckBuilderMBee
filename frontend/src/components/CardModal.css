@@ -25,20 +25,76 @@
   animation: zoomIn 0.3s ease forwards;
 }
 
-.modal-img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
 ul {
   list-style-type: none;
   padding: 0;
 }
 
-/* Background colors für Kartentyp */
-.ultra {
-  background-color: red;
+.img-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.modal-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Shine Effekt  bei rare */
+.img-container.rare::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  animation: rare 2.5s infinite;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+@keyframes rare {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+/* Shine Effekt bei Ultra */
+
+.img-container.ultra {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: pulseBorder 3s infinite ease-in-out;
+}
+
+.modal-img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Moving Galaxy/Holo texture */
+.ultra-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("./images/ultrararity.gif");
+  background-size: cover;
+  mix-blend-mode: screen;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: holoShift 8s linear infinite;
+  z-index: 2;
+  border-radius: 8px;
 }
 
 /* Animations */

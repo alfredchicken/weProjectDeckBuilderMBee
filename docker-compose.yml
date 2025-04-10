@@ -1,0 +1,14 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: deckbuilder-mongodb
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bee
+      MONGO_INITDB_ROOT_PASSWORD: IwTLJS2025
+    volumes:
+      - deckbuilder-data:/data/db
+
+volumes:
+  deckbuilder-data:
