@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/usersmodel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const getUser = async (req, res) => {
   try {
@@ -101,7 +102,13 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Ungültiger Username oder Passwort" });
     }
 
-    res.status(200).json({ message: "Erfolgreich eingeloggt!" });
+    const token = jwt.sign(
+      { userId: user._id, name: user.name }, // Infos, die im Token stehen
+      process.env.JWT_SECRET, // Geheimes Passwort aus .env
+      { expiresIn: "2h" } // Token läuft nach 2 Stunden ab
+    );
+
+    res.status(200).json({ message: "Erfolgreich eingeloggt!", token });
   } catch (error) {
     console.error("Fehler während dem Einloggen:", error);
     res.status(500).json({ message: "Server error" });

@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
-import { fetchCards, saveDeck } from "../api/api.js";
-
-import CardPool from "../components/CardPool.jsx";
-import CardModal from "../components/CardModal.jsx";
-import Deck from "../components/Deck.jsx";
+import { fetchCards, saveDeck, deleteDeck } from "../api/api.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CardPool from "../components/CardPool/CardPool.jsx";
+import CardModal from "../components/CardModal/CardModal.jsx";
+import Deck from "../components/Deck/Deck.jsx";
 import "./DeckBuilder.css";
-import DeckLoadModal from "../components/deckLoadModal.jsx";
+import DeckLoadModal from "../components/Deck/DeckLoadModal.jsx";
 
 const DeckBuilder = () => {
   const [cardPool, setCardPool] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [deck, setDeck] = useState([]);
-  const [deckName, setDeckName] = useState("My Deckname"); // Default Deck Name
+  const [deckName, setDeckName] = useState("My Deckname");
   const [showLoadModal, setShowLoadModal] = useState(false);
+  const [deckId, setDeckId] = useState(null);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -25,6 +27,7 @@ const DeckBuilder = () => {
 
   const handleAddToDeck = (card) => {
     setDeck((prev) => [...prev, card]);
+    console.log("Deck in Modal:", deck);
   };
 
   const handleRemoveFromDeck = (index) => {
@@ -33,30 +36,44 @@ const DeckBuilder = () => {
 
   const handleSaveDeck = async () => {
     if (deck.length !== 50) {
-      alert("Ein Deck muss genau 50 Karten enthalten.");
+      toast.error("A Deck must contain exactly 50 cards!");
       return;
     }
 
     try {
       const result = await saveDeck(deckName, deck);
-      alert(`✅ Deck "${deckName}" wurde gespeichert!`);
+      toast.success(`Your Deck "${deckName}" was saved!`);
     } catch (error) {
-      console.error("Fehler beim Speichern:", error);
-      alert("Fehler beim Speichern des Decks: " + error.message);
+      console.error("Error while saving Deck:", error);
+      toast.error("You have to be logged in to save a deck!");
     }
   };
 
   const handleLoadDeck = async (deckData) => {
-    console.log("Lade Deck:", deckData);
-    const loadedDeck = deckData.cards.map((id) => cardPool.find((card) => card._id === id)).filter(Boolean); // Filtere ungültige IDs
-    console.log("CardPool:", cardPool);
-    console.log("Deck Karten IDs:", deckData.cards); // → Überprüfe die IDs, die du hast
-    console.log(
-      "CardPool Karten IDs:",
-      cardPool.map((card) => card._id)
-    ); // → Vergleiche sie mit denen im Pool
-    console.log("Geladenes Deck:", loadedDeck); // Prüfe hier das geladenen Deck
-    setDeck(loadedDeck); // Setze das Deck
+    console.log("Load Deck:", deckData);
+    setDeck(deckData.cards);
+    console.log("Setze DeckName:", deckData.name);
+    setDeckName(deckData.name);
+    setDeckId(deckData._id);
+    setShowLoadModal(false);
+  };
+
+  const handleDeleteDeck = async () => {
+    if (!deckId) {
+      toast.error("No saved deck to delete!");
+      return;
+    }
+
+    try {
+      await deleteDeck(deckId);
+      toast.success("Deck deleted!");
+      setDeck([]); // Reset deck state
+      setDeckName("My Deckname");
+      setDeckId(null); // Reset Deck ID
+    } catch (error) {
+      console.error("Error deleting deck:", error);
+      toast.error("Failed to delete deck");
+    }
   };
 
   return (
@@ -72,12 +89,13 @@ const DeckBuilder = () => {
           onSave={handleSaveDeck}
           onClear={() => setDeck([])}
           onRemove={handleRemoveFromDeck}
-          onOpenLoadModal={() => setShowLoadModal(true)} // 👈 hier!
+          onOpenLoadModal={() => setShowLoadModal(true)}
+          onDelete={handleDeleteDeck}
         />
       </div>
 
       {/* Modal zur Kartenansicht im Pool */}
-      {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} onAddToDeck={handleAddToDeck} />}
+      {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} onAddToDeck={handleAddToDeck} deck={deck} />}
 
       {/* Modal zum Deck laden */}
       {showLoadModal && <DeckLoadModal onClose={() => setShowLoadModal(false)} onLoad={handleLoadDeck} />}

@@ -1,1 +1,4 @@
-Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi, react-router-dom
+Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi, react-router-dom, toastify
+
+vanillatilt für kartentilt
+toastify für miniPopUps statt alerts.

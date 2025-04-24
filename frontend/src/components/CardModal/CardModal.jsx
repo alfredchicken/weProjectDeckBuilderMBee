@@ -1,9 +1,10 @@
 import "./CardModal.css";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import VanillaTilt from "vanilla-tilt";
 
-const CardModal = ({ card, onClose, onAddToDeck }) => {
+const CardModal = ({ card, onClose, onAddToDeck, deck }) => {
   const tiltRef = useRef(null);
+  const countInDeck = card ? (deck || []).filter((c) => c.name === card.name).length : 0;
 
   useEffect(() => {
     if (!tiltRef.current) return;
@@ -37,9 +38,12 @@ const CardModal = ({ card, onClose, onAddToDeck }) => {
             </>
           )}
         </div>
-        <button className="add-to-deck" onClick={() => onAddToDeck(card)}>
-          Add to Deck
-        </button>
+        <div className="card-details">
+          <button className="add-to-deck" onClick={() => onAddToDeck(card)}>
+            Add to Deck
+          </button>
+          <p className="cards-in-deck">{countInDeck}× in Deck</p>
+        </div>
       </div>
     </div>
   );

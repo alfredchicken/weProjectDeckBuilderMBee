@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
-    password: String,
+    name: { type: String, required: true, unique: true }, // unique = jeder Username nur einmal erlaubt in der db
+    password: { type: String, required: true },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const User = mongoose.model("user", userSchema);

@@ -97,6 +97,13 @@ ul {
   border-radius: 8px;
 }
 
+.card-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .add-to-deck {
   margin-top: 1rem;
   text-align: center;

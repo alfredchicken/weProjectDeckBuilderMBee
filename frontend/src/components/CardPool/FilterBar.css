@@ -1,0 +1,24 @@
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.card-size-slider {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.filter-bar select,
+.filter-bar input {
+  padding: 0.5rem;
+  min-width: 140px;
+}
+
+.filter-search {
+  width: 25%;
+}
