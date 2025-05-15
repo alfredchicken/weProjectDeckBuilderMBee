@@ -1,22 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const token = localStorage.getItem("token");
-  let user = null;
-  const navigate = useNavigate();
+  const { user, logout } = useAuth(); // useAuth Hook importieren
+  const navigate = useNavigate(); // useNavigate Hook importieren
 
-  if (token) {
-    try {
-      const decoded = jwtDecode(token);
-      user = decoded;
-    } catch (err) {
-      console.error("Token ungültig:", err);
-    }
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    await logout();
     navigate("/login");
   };
 
@@ -28,7 +19,7 @@ const Header = () => {
           <Link to="/login">Login</Link>
         ) : (
           <>
-            <span>Welcome Back, {user.name}!</span>
+            <span>Welcome Back, {user}!</span>
             <button onClick={handleLogout}>Logout</button>
           </>
         )}

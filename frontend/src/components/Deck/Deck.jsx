@@ -6,6 +6,7 @@ import DeckGrid from "./DeckGrid";
 const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLoadModal, onDelete }) => {
   const [cardDeckSize, setCardDeckSize] = useState(120);
   const [removingIndex, setRemovingIndex] = useState(null);
+  const [exportDeck, setExportDeck] = useState(() => () => {});
 
   return (
     <div className="deck-container">
@@ -17,10 +18,18 @@ const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLo
         onSave={onSave}
         onClear={onClear}
         onOpenLoadModal={onOpenLoadModal}
-        deckLength={deck.length}
+        deckLength={deck?.length || 0}
         onDelete={onDelete}
+        onExport={exportDeck}
       />
-      <DeckGrid deck={deck} cardDeckSize={cardDeckSize} onRemove={onRemove} removingIndex={removingIndex} setRemovingIndex={setRemovingIndex} />
+      <DeckGrid
+        deck={deck}
+        cardDeckSize={cardDeckSize}
+        onRemove={onRemove}
+        removingIndex={removingIndex}
+        setRemovingIndex={setRemovingIndex}
+        onExportReady={setExportDeck}
+      />
     </div>
   );
 };

@@ -92,21 +92,29 @@ export const loginUser = async (req, res) => {
 
     if (!user) {
       console.log("User nicht gefunden");
-      return res.status(401).json({ message: "Ungültiger Username oder Passwort" });
+      return res.status(401).json({ message: "Invalid username or password." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       console.log("falsches Passwort");
-      return res.status(401).json({ message: "Ungültiger Username oder Passwort" });
+      return res.status(401).json({ message: "Invalid username or password." });
     }
 
     const token = jwt.sign(
       { userId: user._id, name: user.name }, // Infos, die im Token stehen
       process.env.JWT_SECRET, // Geheimes Passwort aus .env
-      { expiresIn: "2h" } // Token läuft nach 2 Stunden ab
+      { expiresIn: "1h" } // Token läuft nach 2 Stunden ab
     );
+
+    // Setze Token als HttpOnly-Cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 3600000, // 1h in ms
+    });
 
     res.status(200).json({ message: "Erfolgreich eingeloggt!", token });
   } catch (error) {

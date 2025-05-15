@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchCards = async () => {
   try {
@@ -13,64 +13,53 @@ export const fetchCards = async () => {
 };
 
 export const saveDeck = async (name, cards) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Token not set");
   const cardIds = cards.map((card) => card._id);
 
   const response = await fetch(`${API_URL}/decks`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ name, cards: cardIds }),
   });
 
   const text = await response.text();
-  console.log("Rohantwort vom Server:", text);
+  console.log("Server Message", text);
 
   let data;
-
   try {
     data = JSON.parse(text);
   } catch (err) {
-    throw new Error("Antwort war kein gültiges JSON:\n" + text);
+    throw new Error("Not a json:\n" + text);
   }
 
   if (!response.ok) {
-    throw new Error(data.message || "Unbekannter Fehler vom Server.");
+    throw new Error(data.message || "Unknown error while saving deck");
   }
 
   return data;
 };
 
 export const fetchAllDecks = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Kein Token vorhanden!");
-
   const response = await fetch(`${API_URL}/decks`, {
     method: "GET",
-    headers: {
-      "Authorization": `Bearer ${token}`,  
-    },
+    credentials: "include", // include = Cookies werden mitgeschickt
   });
 
   if (!response.ok) {
     const data = await response.json();
-    throw new Error(data.message || "Fehler beim Laden der Decks");
+    throw new Error(data.message || "Failed to load decks");
   }
 
   const data = await response.json();
   return data.data;
 };
 
-
 export const deleteDeck = async (deckId) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("Kein Token vorhanden!");
-
   const response = await fetch(`${API_URL}/decks/${deckId}`, {
     method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include", // 👈 wichtig!
   });
 
   if (!response.ok) {
@@ -108,6 +97,8 @@ export const loginUser = async (name, password) => {
   const response = await fetch(`${API_URL}/users/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    // include = Cookies werden mitgeschickt
     body: JSON.stringify({ name, password }),
   });
 

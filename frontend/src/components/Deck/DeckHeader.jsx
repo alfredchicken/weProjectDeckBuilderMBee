@@ -1,7 +1,7 @@
 import React from "react";
 import "./DeckHeader.css/";
 
-const DeckHeader = ({ deckName, setDeckName, cardDeckSize, setCardDeckSize, onSave, onClear, onOpenLoadModal, deckLength, onDelete }) => (
+const DeckHeader = ({ deckName, setDeckName, cardDeckSize, setCardDeckSize, onSave, onClear, onOpenLoadModal, deckLength, onDelete, onExport }) => (
   <div className="deck-header">
     <input className="deck-name-input" type="text" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
     <p>Cards in Deck: {deckLength}</p>
@@ -30,6 +30,9 @@ const DeckHeader = ({ deckName, setDeckName, cardDeckSize, setCardDeckSize, onSa
         }}
       >
         Delete Deck
+      </button>
+      <button className="export-to-img" onClick={onExport}>
+        Export as Image
       </button>
     </div>
   </div>

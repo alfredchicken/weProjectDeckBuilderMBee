@@ -1,21 +1,20 @@
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { loginUser } from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // 👈 Hook innerhalb der Komponente
+  const { login } = useAuth(); // ⬅️ vom Context holen
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await loginUser(name, password); // 👈 API-Call hier!
-      localStorage.setItem("token", data.token);
-      toast.success("Login successfully!");
+      await login(name, password); // ⬅️ Context-login nutzen
+      toast.success("Log in successfully! Nice to see you!");
       navigate("/");
-      
     } catch (error) {
       toast.error(error.message);
     }

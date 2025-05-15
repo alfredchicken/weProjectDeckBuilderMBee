@@ -51,17 +51,17 @@ export const getDecks = async (req, res) => {
 };
 
 export const deleteDeck = async (req, res) => {
-  const { _id } = req.params;
+  const { deckId } = req.params;
 
   try {
-    const deck = await Deck.findById(_id);
+    const deck = await Deck.findById(deckId);
 
     if (!deck) {
       return res.status(404).json({ success: false, message: "Deck nicht gefunden!" });
     }
 
     // Check if the deck belongs to the logged-in user
-    if (deck.createdBy !== req.user.userId) {
+    if (deck.createdBy.toString() !== req.user.userId) {
       return res.status(403).json({ success: false, message: "Nicht erlaubt, dieses Deck zu löschen!" });
     }
 

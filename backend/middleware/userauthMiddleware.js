@@ -1,19 +1,17 @@
 import jwt from "jsonwebtoken";
 
 export const protect = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token; // Token kommt  aus dem Cookie!
 
-  if (authHeader && authHeader.startsWith("Bearer ")) {
-    const token = authHeader.split(" ")[1]; // Token nach "Bearer "
-
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET); // Token prüfen
-      req.user = decoded; // User-Infos in den Request hängen
-      next(); 
-    } catch (error) {
-      return res.status(401).json({ message: "Token ungültig!" });
-    }
-  } else {
+  if (!token) {
     return res.status(401).json({ message: "Kein Token vorhanden!" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // prüfen
+    req.user = decoded; // z. B. { userId: "...", }
+    next(); // wenn i. O. next
+  } catch (error) {
+    return res.status(401).json({ message: "Token ungültig!" });
   }
 };
