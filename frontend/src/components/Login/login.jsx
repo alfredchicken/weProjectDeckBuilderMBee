@@ -1,32 +1,50 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import "./Login.css";
+
+// Validation mit Yup
+const LoginSchema = Yup.object().shape({
+  name: Yup.string().required("Please enter an username"),
+  password: Yup.string().required("Please enter a password"),
+});
 
 const Login = () => {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useAuth(); 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await login(name, password); 
-      toast.success("Log in successfully! Nice to see you!");
-      navigate("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input type="text" placeholder="Username" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="password" placeholder="Passwort" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Login</button>
-    </form>
+    <Formik
+      initialValues={{ name: "", password: "" }}
+      validationSchema={LoginSchema}
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          await login(values.name, values.password);
+          toast.success("Log in successfully! Nice to see you!");
+          navigate("/");
+        } catch (error) {
+          toast.error(error.message);
+        }
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form className="login-form">
+          <h2>Login</h2>
+          <Field type="text" name="name" placeholder="Username" />
+          <ErrorMessage name="name" component="div" style={{ color: "red" }} />
+
+          <Field type="password" name="password" placeholder="Passwort" />
+          <ErrorMessage name="password" component="div" style={{ color: "red" }} />
+
+          <button type="submit" disabled={isSubmitting}>
+            Login
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

@@ -1,0 +1,21 @@
+.login-page-container {
+  display: flex;
+  flex-direction: row;
+  width: 50vw;
+  height: 100vh;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+@media (max-width: 768px) {
+  .login-page-container {
+    width: 80vw;
+    min-height: 10px;
+    margin: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}
