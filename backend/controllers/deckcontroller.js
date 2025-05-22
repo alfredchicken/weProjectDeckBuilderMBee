@@ -10,7 +10,7 @@ export const createDeck = async (req, res) => {
   if (!name || !Array.isArray(cards) || cards.length !== 50) {
     return res.status(400).json({
       success: false,
-      message: "Name und exakt 50 Karten sind für ein Deck nötig!",
+      message: "Name and exactly 50 cards are needed!",
     });
   }
 
@@ -45,7 +45,7 @@ export const getDecks = async (req, res) => {
     const decks = await Deck.find({ createdBy: req.user.userId }).populate("cards");
     res.status(200).json({ success: true, data: decks });
   } catch (error) {
-    console.error("Fehler beim laden des Decks von der Datenbank", error);
+    console.error("Error while loading Database", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -57,20 +57,20 @@ export const deleteDeck = async (req, res) => {
     const deck = await Deck.findById(deckId);
 
     if (!deck) {
-      return res.status(404).json({ success: false, message: "Deck nicht gefunden!" });
+      return res.status(404).json({ success: false, message: "Deck not found!" });
     }
 
     // Check if the deck belongs to the logged-in user
     if (deck.createdBy.toString() !== req.user.userId) {
-      return res.status(403).json({ success: false, message: "Nicht erlaubt, dieses Deck zu löschen!" });
+      return res.status(403).json({ success: false, message: "Not allowed to delete deck!" });
     }
 
     await deck.deleteOne();
 
-    res.status(200).json({ success: true, message: "Deck gelöscht!" });
+    res.status(200).json({ success: true, message: "Deck deleted!" });
   } catch (error) {
-    console.error("Fehler beim Löschen des Decks:", error);
-    res.status(500).json({ success: false, message: "Serverfehler beim Löschen." });
+    console.error("Error while deleting deck:", error);
+    res.status(500).json({ success: false, message: "Servererror while deleting." });
   }
 };
 

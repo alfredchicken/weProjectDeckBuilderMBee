@@ -6,13 +6,13 @@ import { useAuth } from "../../context/AuthContext";
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth(); // ⬅️ vom Context holen
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(name, password); // ⬅️ Context-login nutzen
+      await login(name, password); 
       toast.success("Log in successfully! Nice to see you!");
       navigate("/");
     } catch (error) {

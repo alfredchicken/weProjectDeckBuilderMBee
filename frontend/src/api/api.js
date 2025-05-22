@@ -59,7 +59,7 @@ export const fetchAllDecks = async () => {
 export const deleteDeck = async (deckId) => {
   const response = await fetch(`${API_URL}/decks/${deckId}`, {
     method: "DELETE",
-    credentials: "include", // 👈 wichtig!
+    credentials: "include",
   });
 
   if (!response.ok) {

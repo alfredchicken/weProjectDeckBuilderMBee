@@ -11,6 +11,7 @@ const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLo
   return (
     <div className="deck-container">
       <DeckHeader
+        deck={deck}
         deckName={deckName}
         setDeckName={setDeckName}
         cardDeckSize={cardDeckSize}

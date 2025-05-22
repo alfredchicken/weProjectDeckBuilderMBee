@@ -17,7 +17,7 @@ const DeckLoadModal = ({ onClose, onLoad }) => {
     };
 
     loadDecks();
-  }, []); // empty array = only once
+  }, []); // empty array = only once useEffect
 
   return (
     <div className="modal-overlay" onClick={onClose}>

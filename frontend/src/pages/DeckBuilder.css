@@ -8,3 +8,47 @@
   flex: 1;
   overflow: hidden;
 }
+
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .deckbuilder-layout {
+    flex-direction: column;
+  }
+
+  .mobile-only {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .half {
+    width: 100%;
+  }
+
+  .hidden-on-mobile {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
+}
+
+.tab-buttons {
+  justify-content: space-between;
+  padding: 0 16px;
+  margin: 16px 0;
+}
+
+.tab-buttons button {
+  width: 100%;
+}
+
+.tab-buttons button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}

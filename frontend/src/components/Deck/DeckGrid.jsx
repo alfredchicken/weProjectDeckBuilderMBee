@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import "./DeckGrid.css";
+import Spinner from "../Spinner/Spinner";
 
 const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady }) => {
   const deckRef = useRef(null);
+  const [loadingExport, setLoadingExport] = useState(false);
 
   useEffect(() => {
     if (!onExportReady || !deckRef.current) return;
@@ -11,6 +13,8 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
     const exportFunction = () => {
       const node = deckRef.current;
       if (!node) return;
+
+      setLoadingExport(true);
 
       const originalOverflow = node.style.overflow;
       const originalHeight = node.style.height;
@@ -35,6 +39,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
         .finally(() => {
           node.style.overflow = originalOverflow;
           node.style.height = originalHeight;
+          setLoadingExport(false);
         });
     };
 
@@ -60,6 +65,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
           </div>
         ))}
       </div>
+      {loadingExport && <Spinner />}
     </>
   );
 };

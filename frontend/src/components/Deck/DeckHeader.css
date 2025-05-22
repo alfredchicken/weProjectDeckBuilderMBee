@@ -3,12 +3,26 @@
   flex-direction: column;
   padding: 1rem;
   height: 100vh;
+  border: red 1px solid;
 }
 
 .deck-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: 1rem 0;
+  padding: 0 0 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.deck-info {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: start;
+}
+
+.deck-header input {
+  height: 16px;
+  width: 25%;
+  padding: 8px;
 }

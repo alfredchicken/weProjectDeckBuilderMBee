@@ -1,10 +1,28 @@
 import React from "react";
 import "./DeckHeader.css/";
 
-const DeckHeader = ({ deckName, setDeckName, cardDeckSize, setCardDeckSize, onSave, onClear, onOpenLoadModal, deckLength, onDelete, onExport }) => (
+const DeckHeader = ({
+  deck,
+  deckName,
+  setDeckName,
+  cardDeckSize,
+  setCardDeckSize,
+  onSave,
+  onClear,
+  onOpenLoadModal,
+  deckLength,
+  onDelete,
+  onExport,
+}) => (
   <div className="deck-header">
-    <input className="deck-name-input" type="text" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
-    <p>Cards in Deck: {deckLength}</p>
+    <div className="deck-info">
+      <input className="deck-name-input" type="text" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
+      <p>Cards in Deck: {deckLength}</p>
+      <p>Creatures: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "creature").length : 0}</p>
+      <p>Items: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "item").length : 0}</p>
+      <p>Places: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "place").length : 0}</p>
+      <p>Resources: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "resource").length : 0}</p>
+    </div>
     <div className="cardDeck-size-slider">
       <input
         className="cardDeck-size-range"

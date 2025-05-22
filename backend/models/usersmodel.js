@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true }, // unique = jeder Username nur einmal erlaubt in der db
+    name: { type: String, required: true, unique: true }, // unique = einzigartig, hier jeder Username nur einmal erlaubt in der db
     password: { type: String, required: true },
   },
   { timestamps: true }

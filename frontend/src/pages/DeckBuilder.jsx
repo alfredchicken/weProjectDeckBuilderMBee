@@ -15,6 +15,7 @@ const DeckBuilder = () => {
   const [deckName, setDeckName] = useState("My Deckname");
   const [showLoadModal, setShowLoadModal] = useState(false);
   const [deckId, setDeckId] = useState(null);
+  const [activeTab, setActiveTab] = useState("pool");
 
   useEffect(() => {
     const loadCards = async () => {
@@ -77,29 +78,39 @@ const DeckBuilder = () => {
   };
 
   return (
-    <div className="deckbuilder-layout">
-      <div className="half">
-        <CardPool cards={cardPool} onSelect={setSelectedCard} />
+    <>
+      <div className="tab-buttons mobile-only">
+        <button onClick={() => setActiveTab("pool")} className={activeTab === "pool" ? "active" : ""}>
+          Card Pool
+        </button>
+        <button onClick={() => setActiveTab("deck")} className={activeTab === "deck" ? "active" : ""}>
+          Deck
+        </button>
       </div>
-      <div className="half">
-        <Deck
-          deck={deck}
-          deckName={deckName}
-          setDeckName={setDeckName}
-          onSave={handleSaveDeck}
-          onClear={() => setDeck([])}
-          onRemove={handleRemoveFromDeck}
-          onOpenLoadModal={() => setShowLoadModal(true)}
-          onDelete={handleDeleteDeck}
-        />
+      <div className="deckbuilder-layout">
+        <div className={`half ${activeTab === "pool" ? "visible" : "hidden-on-mobile"}`}>
+          <CardPool cards={cardPool} onSelect={setSelectedCard} />
+        </div>
+        <div className={`half ${activeTab === "deck" ? "visible" : "hidden-on-mobile"}`}>
+          <Deck
+            deck={deck}
+            deckName={deckName}
+            setDeckName={setDeckName}
+            onSave={handleSaveDeck}
+            onClear={() => setDeck([])}
+            onRemove={handleRemoveFromDeck}
+            onOpenLoadModal={() => setShowLoadModal(true)}
+            onDelete={handleDeleteDeck}
+          />
+        </div>
+
+        {/* Modal zur Kartenansicht im Pool */}
+        {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} onAddToDeck={handleAddToDeck} deck={deck} />}
+
+        {/* Modal zum Deck laden */}
+        {showLoadModal && <DeckLoadModal onClose={() => setShowLoadModal(false)} onLoad={handleLoadDeck} />}
       </div>
-
-      {/* Modal zur Kartenansicht im Pool */}
-      {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} onAddToDeck={handleAddToDeck} deck={deck} />}
-
-      {/* Modal zum Deck laden */}
-      {showLoadModal && <DeckLoadModal onClose={() => setShowLoadModal(false)} onLoad={handleLoadDeck} />}
-    </div>
+    </>
   );
 };
 
