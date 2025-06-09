@@ -20,6 +20,8 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
+    "node-fetch": "^3.3.2",
+    "react-google-recaptcha": "^3.1.0",
     "react-router-dom": "^7.1.5",
     "yup": "^1.6.1"
   },

@@ -71,11 +71,11 @@ export const deleteDeck = async (deckId) => {
 };
 
 // Registrierung
-export const registerUser = async (name, password) => {
+export const registerUser = async (name, email, password, recaptchaToken) => {
   const response = await fetch(`${API_URL}/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, password }),
+    body: JSON.stringify({ name, email, password, recaptchaToken }),
   });
 
   let data;

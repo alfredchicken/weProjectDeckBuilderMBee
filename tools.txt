@@ -4,3 +4,8 @@ vanillatilt für kartentilt
 toastify für miniPopUps statt alerts.
 html to image to export Deck PNGs
 Formik und yup für Login und Registration formulare
+google recaptcha
+npm node-fetch für http requests 
+
+
+// Fuer praesi zeigen: 5 falsche loginversuche, 10 min locked.

@@ -22,7 +22,7 @@ const DeckLoadModal = ({ onClose, onLoad }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Deck auswählen</h2>
+        <h2>Choose Deck</h2>
         <ul>
           {decks.length === 0 ? (
             <p>No decks found!</p>
