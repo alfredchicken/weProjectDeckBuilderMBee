@@ -31,7 +31,7 @@ const CardModal = ({ card, onClose, onAddToDeck, deck }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div ref={tiltRef} className={`img-container ${card.rarity.toLowerCase()}`}>
-          <img src={card.imgURL} alt={card.name} className="modal-img" />
+          <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="modal-img" />
           {card.rarity.toLowerCase() === "ultra" && (
             <>
               <div className="ultra-overlay" />

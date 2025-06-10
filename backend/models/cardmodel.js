@@ -11,7 +11,7 @@ const cardSchema = new mongoose.Schema(
       required: true,
     },
     type: {
-      type: [String], // vorher: String
+      type: [String],
       required: true,
     },
     attack: {

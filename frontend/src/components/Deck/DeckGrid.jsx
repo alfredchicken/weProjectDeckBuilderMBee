@@ -61,7 +61,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
               }, 300);
             }}
           >
-            <img src={card.imgURL} alt={card.name} className="img-pool" style={{ width: "100%" }} />
+            <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="img-pool" style={{ width: "100%" }} />
           </div>
         ))}
       </div>

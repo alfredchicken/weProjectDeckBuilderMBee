@@ -22,7 +22,7 @@ const Login = () => {
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await login(values.name, values.password);
-          toast.success("Log in successfully! Nice to see you!");
+          toast.success(`Log in successfully! Nice to see you!`);
           navigate("/");
         } catch (error) {
           toast.error(error.message);

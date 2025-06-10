@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true, unique: true }, // unique = einzigartig, hier jeder Username nur einmal erlaubt in der db
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    role: { type: String, default: "user" },
     failedLoginAttempts: { type: Number, default: 0 },
     lockUntil: { type: Date },
   },

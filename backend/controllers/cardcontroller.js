@@ -16,8 +16,19 @@ export const getCards = async (req, res) => {
 export const createCard = async (req, res) => {
   // automatische Umwandlung: string zu array, weil ich später mehr als nur einfarbige Kartentypen erstellt habe.
   if (typeof req.body.type === "string") {
-    req.body.type = [req.body.type];
+    req.body.type = req.body.type.split(",").map((t) => t.trim());
   }
+
+  // Bild-URL einfügen (vor Validation!)
+  let imgURL = req.body.imgURL || "";
+  if (req.file) {
+    imgURL = req.file.filename;
+  }
+  req.body.imgURL = imgURL; // <-- HIER: imgURL in req.body setzen
+
+  console.log("New Card Request:", req.body, req.file);
+
+  // Jetzt validieren!
   const { error } = cardSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
@@ -27,13 +38,13 @@ export const createCard = async (req, res) => {
     });
   }
 
-  const newCard = new Card(req.body);
+  const newCard = new Card({ ...req.body, imgURL });
 
   try {
     await newCard.save();
     res.status(201).json({ success: true, data: newCard });
-  } catch {
-    console.error("Fehler beim speichern der Karte auf die Datenbank");
+  } catch (e) {
+    console.error("Fehler beim speichern der Karte auf die Datenbank", e);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -62,7 +73,7 @@ export const updateCard = async (req, res) => {
   const card = req.body;
 
   if (typeof card.type === "string") {
-    card.type = [card.type];
+    card.type = card.type.split(",").map((t) => t.trim());
   }
 
   const { error } = cardSchema.validate(card, { abortEarly: false });

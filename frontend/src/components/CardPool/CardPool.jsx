@@ -5,9 +5,18 @@ import CardGrid from "./CardGrid";
 
 const CardPool = ({ cards, onSelect }) => {
   const [filteredCards, setFilteredCards] = useState([]);
-  const [filters, setFilters] = useState({ type: "", tribe: "", rarity: "", cardtype: "", sort: "", search: "", playcost: "" });
+  const [filters, setFilters] = useState({
+    type: "",
+    tribe: "",
+    rarity: "",
+    cardtype: "",
+    sort: "",
+    search: "",
+    playcost: "",
+  });
   const [cardSize, setCardSize] = useState(120);
 
+  // Hilfsfunktion für Dropdowns (z. B. FilterBar)
   const uniqueValues = (key) => {
     const seen = new Set();
     cards.forEach((card) => {
@@ -18,6 +27,7 @@ const CardPool = ({ cards, onSelect }) => {
     return [...seen].sort().map((val) => val.charAt(0).toUpperCase() + val.slice(1));
   };
 
+  // Filter-Logik
   useEffect(() => {
     let result = [...cards];
     if (filters.search) result = result.filter((c) => c.name.toLowerCase().includes(filters.search.toLowerCase()));

@@ -2,14 +2,15 @@ import React from "react";
 import "./CardGrid.css/";
 import Spinner from "../Spinner/Spinner";
 
-const CardGrid = ({ cards, cardSize, onSelect }) => {
-  return cards.length === 0 ? (
-    <Spinner />
-  ) : (
+const CardGrid = ({ cards, cardSize, onSelect, loading }) => {
+  if (loading) return <Spinner />;
+  if (cards.length === 0) return <div>No cards found.</div>;
+
+  return (
     <div className="cards-container" style={{ "--card-size": `${cardSize}px` }}>
       {cards.map((card) => (
         <div key={card.cardID} className="card" onClick={() => onSelect(card)}>
-          <img src={card.imgURL} alt={card.name} className="img-pool" style={{ width: "100%" }} />
+          <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="img-pool" style={{ width: "100%" }} />
         </div>
       ))}
     </div>

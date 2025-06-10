@@ -15,11 +15,12 @@ const Header = () => {
     <header>
       <nav>
         <Link to="/">DeckBuilder</Link>
+        {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}
         {!user ? (
           <Link to="/login">Login</Link>
         ) : (
           <>
-            <span>Welcome Back, {user}!</span>
+            <span>Welcome Back, {user.name}!</span>
             <button onClick={handleLogout}>Logout</button>
           </>
         )}

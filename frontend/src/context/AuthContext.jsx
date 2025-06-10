@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
-      setUser(data.name);
+      setUser({ name: data.name, role: data.role });
     } catch {
       setUser(null);
     }

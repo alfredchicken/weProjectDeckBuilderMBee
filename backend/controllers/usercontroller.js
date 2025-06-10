@@ -147,7 +147,7 @@ export const loginUser = async (req, res) => {
     await user.save();
 
     const token = jwt.sign(
-      { userId: user._id, name: user.name }, // Infos, die im Token stehen
+      { userId: user._id, name: user.name, role: user.role }, // Infos, die im Token stehen
       process.env.JWT_SECRET, // Geheimes Passwort aus .env
       { expiresIn: "1h" } // Token läuft nach 1 Stunde ab
     );
