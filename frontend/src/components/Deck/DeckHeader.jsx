@@ -1,5 +1,11 @@
 import React from "react";
 import "./DeckHeader.css/";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faFileImport } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
 
 const DeckHeader = ({
   deck,
@@ -33,13 +39,16 @@ const DeckHeader = ({
         value={cardDeckSize}
         onChange={(e) => setCardDeckSize(Number(e.target.value))}
       />
-      <button className="save-deck-btn" onClick={onSave}>
-        Save Deck
+      <button className="save-deck-btn" onClick={onSave} alt="Save Deck">
+        <FontAwesomeIcon icon={faFloppyDisk} />
       </button>
-      <button className="clear-deck" onClick={onClear}>
-        Clear Deck
+      <button onClick={onOpenLoadModal} alt="Load Deck">
+        {" "}
+        <FontAwesomeIcon icon={faFileImport} />
       </button>
-      <button onClick={onOpenLoadModal}>Load Deck</button>
+      <button className="clear-deck" onClick={onClear} alt="Clear Deck">
+        <FontAwesomeIcon icon={faNoteSticky} />
+      </button>
       <button
         className="delete-deck"
         onClick={() => {
@@ -47,10 +56,10 @@ const DeckHeader = ({
           onDelete();
         }}
       >
-        Delete Deck
+        <FontAwesomeIcon icon={faTrash} />
       </button>
-      <button className="export-to-img" onClick={onExport}>
-        Export as Image
+      <button className="export-to-img" onClick={onExport} alt="Export to Image">
+        <FontAwesomeIcon icon={faImage} />
       </button>
     </div>
   </div>

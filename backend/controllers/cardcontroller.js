@@ -1,6 +1,7 @@
 import Card from "../models/cardmodel.js";
 import mongoose from "mongoose";
 import cardSchema from "../models/cardvalidation.js";
+import { io } from "../server.js";
 
 export const getCards = async (req, res) => {
   try {
@@ -42,6 +43,7 @@ export const createCard = async (req, res) => {
 
   try {
     await newCard.save();
+    io.emit("new_card", { name: newCard.name, cardID: newCard.cardID });
     res.status(201).json({ success: true, data: newCard });
   } catch (e) {
     console.error("Fehler beim speichern der Karte auf die Datenbank", e);
