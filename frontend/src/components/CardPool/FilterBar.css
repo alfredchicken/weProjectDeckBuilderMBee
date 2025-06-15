@@ -9,16 +9,30 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
   gap: 0.5rem;
 }
 
-.filter-bar select,
 .filter-bar input {
   padding: 0.5rem;
   min-width: 140px;
+  border-radius: 8px;
+  border: 0px;
 }
 
-.filter-search {
-  width: 25%;
+.filter-bar select {
+  padding: 0.5rem;
+  min-width: 140px;
+  border-radius: 8px;
+}
+
+.card-size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deckbuilder-titles {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
 }

@@ -2,7 +2,7 @@
   overflow-y: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
-  justify-content: start;
+  justify-content: center;
   gap: 0.1rem;
   padding-bottom: 64px; /* debug, weil Karten sonst angeschnitte angezeigt werden */
 }
@@ -33,4 +33,12 @@
   height: auto;
   object-fit: contain;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deck-cards::-webkit-scrollbar {
+  width: 8px;
+}
+.deck-cards::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
 }

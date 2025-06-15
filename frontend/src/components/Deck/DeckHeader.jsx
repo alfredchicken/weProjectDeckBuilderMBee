@@ -30,34 +30,28 @@ const DeckHeader = ({
       <p>Places: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "place").length : 0}</p>
       <p>Resources: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "resource").length : 0}</p>
     </div>
-    <div className="cardDeck-size-slider">
-      <input
-        className="cardDeck-size-range"
-        type="range"
-        min="80"
-        max="200"
-        step="10"
-        value={cardDeckSize}
-        onChange={(e) => setCardDeckSize(Number(e.target.value))}
-      />
+
+    <div className="card-size-controls">
+      <button onClick={() => setCardDeckSize(Math.max(cardDeckSize - 10, 80))}>−</button>
+      <button onClick={() => setCardDeckSize(Math.min(cardDeckSize + 10, 200))}>+</button>
 
       <select onChange={(e) => onSortChange(e.target.value)} className="deck-sort-select">
         <option value="">Sort by...</option>
         <option value="creature-place-item">Cardtype</option>
       </select>
 
-      <button className="save-deck-btn" onClick={onSave} alt="Save Deck">
+      <button className="save-deck-btn deckbutton" onClick={onSave} alt="Save Deck">
         <FontAwesomeIcon icon={faFloppyDisk} />
       </button>
-      <button onClick={onOpenLoadModal} alt="Load Deck">
+      <button onClick={onOpenLoadModal} className="deckbutton" alt="Load Deck">
         {" "}
         <FontAwesomeIcon icon={faFileImport} />
       </button>
-      <button className="clear-deck" onClick={onClear} alt="Clear Deck">
+      <button className="clear-deck deckbutton" onClick={onClear} alt="Clear Deck">
         <FontAwesomeIcon icon={faNoteSticky} />
       </button>
       <button
-        className="delete-deck"
+        className="delete-deck deckbutton"
         onClick={() => {
           console.log("Delete Button clicked!");
           onDelete();
@@ -65,7 +59,7 @@ const DeckHeader = ({
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>
-      <button className="export-to-img" onClick={onExport} alt="Export to Image">
+      <button className="export-to-img deckbutton" onClick={onExport} alt="Export to Image">
         <FontAwesomeIcon icon={faImage} />
       </button>
     </div>

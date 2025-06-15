@@ -2,7 +2,7 @@
   overflow-y: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--card-size)));
-  justify-content: start;
+  justify-content: center;
   gap: 0.1rem;
   padding-bottom: 64px; /* debug, weil Karten sonst angeschnitte angezeigt werden */
 }

@@ -2,6 +2,7 @@
   display: flex;
   height: 100vh;
   overflow: hidden;
+  gap: 16px;
 }
 
 .half {
@@ -11,6 +12,21 @@
 
 .mobile-only {
   display: none;
+}
+
+.tab-buttons {
+  justify-content: space-between;
+  padding: 0 16px;
+  margin: 16px 0;
+}
+
+.tab-buttons button {
+  width: 100%;
+}
+
+.tab-buttons button.active {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
@@ -38,17 +54,4 @@
   }
 }
 
-.tab-buttons {
-  justify-content: space-between;
-  padding: 0 16px;
-  margin: 16px 0;
-}
 
-.tab-buttons button {
-  width: 100%;
-}
-
-.tab-buttons button.active {
-  font-weight: bold;
-  text-decoration: underline;
-}

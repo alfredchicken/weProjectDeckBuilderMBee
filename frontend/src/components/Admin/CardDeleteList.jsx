@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CardDeleteList = ({ cards, onDelete }) => {
-
-
   const handleDelete = async (cardID) => {
     if (!window.confirm("Do you really wanna delete that card?")) return;
     try {
@@ -28,7 +28,7 @@ const CardDeleteList = ({ cards, onDelete }) => {
           <li key={card._id} style={{ marginBottom: 10 }}>
             <b>{card.name}</b> ({card.cardID}) [{card.type?.join(", ")}]
             <button style={{ marginLeft: 10 }} onClick={() => handleDelete(card.cardID)}>
-              Delete
+              <FontAwesomeIcon icon={faTrash} />
             </button>
           </li>
         ))}
