@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const CardDeleteList = ({ cards, onDelete }) => {
+
+
   const handleDelete = async (cardID) => {
     if (!window.confirm("Do you really wanna delete that card?")) return;
     try {

@@ -28,7 +28,12 @@ const AdminDashboard = () => {
       <h2>Admin Dashboard</h2>
       <CardCreateForm onAdd={addCard} />
       <hr />
-      <CardDeleteList cards={cards} onDelete={removeCard} />
+      <CardDeleteList
+        cards={cards}
+        onDelete={(deletedID) => {
+          setCards((prev) => prev.filter((card) => card.cardID !== deletedID));
+        }}
+      />
     </div>
   );
 };

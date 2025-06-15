@@ -3,7 +3,7 @@ import { toPng } from "html-to-image";
 import "./DeckGrid.css";
 import Spinner from "../Spinner/Spinner";
 
-const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady }) => {
+const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady, sortedDeck }) => {
   const deckRef = useRef(null);
   const [loadingExport, setLoadingExport] = useState(false);
 
@@ -49,7 +49,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
   return (
     <>
       <div className="deck-cards" ref={deckRef} style={{ "--card-size": `${cardDeckSize}px` }}>
-        {deck.map((card, index) => (
+        {(sortedDeck || []).map((card, index) => (
           <div
             key={`${card.cardID}-${index}`}
             className={`card ${removingIndex === index ? "fade-out" : ""}`}

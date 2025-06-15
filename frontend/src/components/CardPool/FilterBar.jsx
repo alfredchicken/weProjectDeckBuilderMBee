@@ -19,11 +19,13 @@ const FilterBar = ({ filters, cardSize, onFilterChange, onCardSizeChange, unique
     {["type", "tribe", "rarity", "cardtype", "playcost"].map((filterKey) => (
       <select key={filterKey} name={filterKey} value={filters[filterKey] || ""} onChange={onFilterChange}>
         <option value="">All {filterKey.charAt(0).toUpperCase() + filterKey.slice(1)}s</option>
-        {uniqueValues(filterKey).map((val) => (
-          <option key={val} value={val}>
-            {val}
-          </option>
-        ))}
+        {[...uniqueValues(filterKey)]
+          .sort((a, b) => (filterKey === "playcost" ? a - b : String(a).localeCompare(String(b))))
+          .map((val) => (
+            <option key={val} value={val}>
+              {val}
+            </option>
+          ))}
       </select>
     ))}
 

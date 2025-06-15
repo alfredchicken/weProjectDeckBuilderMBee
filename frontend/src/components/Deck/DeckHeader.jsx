@@ -19,6 +19,7 @@ const DeckHeader = ({
   deckLength,
   onDelete,
   onExport,
+  onSortChange,
 }) => (
   <div className="deck-header">
     <div className="deck-info">
@@ -39,6 +40,12 @@ const DeckHeader = ({
         value={cardDeckSize}
         onChange={(e) => setCardDeckSize(Number(e.target.value))}
       />
+
+      <select onChange={(e) => onSortChange(e.target.value)} className="deck-sort-select">
+        <option value="">Sort by...</option>
+        <option value="creature-place-item">Cardtype</option>
+      </select>
+
       <button className="save-deck-btn" onClick={onSave} alt="Save Deck">
         <FontAwesomeIcon icon={faFloppyDisk} />
       </button>
