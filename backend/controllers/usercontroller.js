@@ -105,13 +105,11 @@ export const loginUser = async (req, res) => {
   const { name, password } = req.body;
 
   if (!name || !password) {
-    console.log("Fehlender Name oder Passwort");
     return res.status(400).json({ message: "Name und Passwort sind nötig" });
   }
 
   try {
     const user = await User.findOne({ name });
-    console.log("User gefunden!");
 
     if (!user) {
       console.log("User nicht gefunden");
@@ -146,22 +144,29 @@ export const loginUser = async (req, res) => {
     user.lockUntil = undefined;
     await user.save();
 
-    const token = jwt.sign(
-      { userId: user._id, name: user.name, role: user.role }, // Infos, die im Token stehen
-      process.env.JWT_SECRET, // Geheimes Passwort aus .env
-      { expiresIn: "1h" } // Token läuft nach 1 Stunde ab
-    );
+    // Access Token
+    const accessToken = jwt.sign({ userId: user._id, name: user.name, role: user.role }, process.env.JWT_SECRET, { expiresIn: "15m" });
 
-    res.cookie("token", token, {
+    // Refresh Token:
+    const refreshToken = jwt.sign({ userId: user._id, name: user.name, role: user.role }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
+
+    // Cookies
+    res.cookie("token", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 3600000,
+      maxAge: 15 * 60 * 1000,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Tage
     });
 
-    res.status(200).json({ message: "Erfolgreich eingeloggt!", token });
+    res.status(200).json({ message: "Successfully logged in!", accessToken });
   } catch (error) {
-    console.error("Fehler während dem Einloggen:", error);
+    console.error("Error while logging in:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -172,5 +177,33 @@ export const logoutUser = (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "Strict",
   });
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+  });
   res.status(200).json({ message: "Erfolgreich ausgeloggt!" });
+};
+
+// Refresh Access Token
+export const refreshAccessToken = (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No refresh token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    // neuen Access Token ausstellen:
+    const accessToken = jwt.sign({ userId: decoded.userId, name: decoded.name, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "15m" });
+    res.cookie("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 15 * 60 * 1000,
+    });
+    res.status(200).json({ message: "New access token issued" });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid refresh token" });
+  }
 };

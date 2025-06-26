@@ -1,5 +1,29 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+
+//
+export const fetchWithAuth = async (url, options = {}) => {
+  let response = await fetch(url, { ...options, credentials: "include" });
+
+  if (response.status === 401) {
+    // Versuch Token-Refresh
+    const refreshResponse = await fetch(`${API_URL}/users/refresh`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (refreshResponse.ok) {
+      // Erneut probieren
+      response = await fetch(url, { ...options, credentials: "include" });
+    } else {
+      // Session abgelaufen
+      throw new Error("Session expired. Please log in again.");
+    }
+  }
+
+  return response;
+};
+
 export const fetchCards = async () => {
   try {
     const response = await fetch(`${API_URL}/cards`);
@@ -15,7 +39,7 @@ export const fetchCards = async () => {
 export const saveDeck = async (name, cards) => {
   const cardIds = cards.map((card) => card._id);
 
-  const response = await fetch(`${API_URL}/decks`, {
+  const response = await fetchWithAuth(`${API_URL}/decks`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -42,7 +66,7 @@ export const saveDeck = async (name, cards) => {
 };
 
 export const fetchAllDecks = async () => {
-  const response = await fetch(`${API_URL}/decks`, {
+  const response = await fetchWithAuth(`${API_URL}/decks`, {
     method: "GET",
     credentials: "include", // include = Cookies werden mitgeschickt
   });
@@ -57,7 +81,7 @@ export const fetchAllDecks = async () => {
 };
 
 export const deleteDeck = async (deckId) => {
-  const response = await fetch(`${API_URL}/decks/${deckId}`, {
+  const response = await fetchWithAuth(`${API_URL}/decks/${deckId}`, {
     method: "DELETE",
     credentials: "include",
   });

@@ -56,5 +56,4 @@ server.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
 });
 
-// Für Controller zugänglich machen:
 export { io };

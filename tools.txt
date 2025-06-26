@@ -3,7 +3,7 @@ Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi, react-router-dom, toa
 vanillatilt für kartentilt
 toastify für miniPopUps statt alerts.
 html to image to export Deck PNGs
-Formik und yup für Login und Registration formulare
+Formik und yup für Login und Registration formulare, auch prüfung der Logins
 google recaptcha
 npm node-fetch für http requests 
 Socket.io

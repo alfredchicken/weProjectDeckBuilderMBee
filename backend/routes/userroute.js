@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, deleteUser, getUser, loginUser, updateUser, logoutUser } from "../controllers/usercontroller.js";
+import { createUser, deleteUser, getUser, loginUser, updateUser, logoutUser, refreshAccessToken } from "../controllers/usercontroller.js";
 import { protect } from "../middleware/userauthMiddleware.js";
 
 const router = express.Router();
@@ -14,5 +14,6 @@ router.delete("/:name", deleteUser);
 router.put("/:name", updateUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
+router.post("/refresh", refreshAccessToken);
 
 export default router;

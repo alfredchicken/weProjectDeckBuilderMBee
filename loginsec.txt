@@ -1,0 +1,90 @@
+Was ist schon sehr gut?
+JWT-Token als Cookie: Sicherer als LocalStorage.
+
+HTTP-Only: Schutz vor XSS-Angriffen (Client kann Cookie nicht auslesen).
+
+SameSite: Strict: Schutz vor CSRF (Cross-Site Request Forgery).
+
+Lock-Mechanismus nach Fehlversuchen: Basisschutz gegen Brute Force.
+
+Passwort-Hashing: Mit bcrypt und Salt.
+
+Captcha beim Signup: Verhindert Bot-Registrierung.
+
+Roles: Zugriff auf Admin-Routen geschützt.
+
+Was ist (noch) nicht ganz Standard oder hat Schwächen?
+1. Kein 2FA
+Du hast gefragt, ob/wie 2FA geht. Dein System hat es aktuell nicht.
+(Lässt sich aber nachrüsten.)
+
+2. Token im Cookie, aber kein CSRF-Token
+Dein Cookie ist „HTTP-Only, SameSite=Strict“ – das schützt dich gut vor CSRF-Angriffen.
+
+Wenn du irgendwann APIs baust, die auch von Drittseiten erreichbar sein sollen, müsstest du zusätzlich einen CSRF-Token implementieren.
+
+3. JWT-Lifetime & Refresh
+Dein Token läuft nach 1h ab (expiresIn: "1h"), was gut ist.
+
+Aktuell kein Refresh-Token-Mechanismus: Nach 1h muss der User sich neu einloggen.
+
+Standard wäre: Access-Token kurzlebig (wie bei dir) + Refresh-Token (länger, zum erneuten Ausstellen).
+
+Vorteil: Mehr Sicherheit und bessere Usability.
+
+Aber: Für viele Hobby-Projekte reicht das so, wie du es hast.
+
+4. Fehlende Passwort-Reset-Funktion
+Nutzer können ihr Passwort nicht zurücksetzen.
+Industriestandard wäre ein „Passwort vergessen?“ Link mit Mail-Token.
+
+5. Session Fixation/Logout
+Alles solide, Cookie wird beim Logout entfernt.
+
+Achtung: Nach Passwortwechsel solltest du auch alle Sessions des Users invalidieren.
+
+6. Email nicht verifiziert
+Der Account ist sofort aktiv, auch wenn die E-Mail nicht bestätigt wurde.
+
+Standard: Nach Registrierung muss die Mail-Adresse erst bestätigt werden, sonst kein Login möglich.
+
+7. JWT Payload (rollenbasierter Zugriff)
+Du schreibst name und role ins Token, das ist üblich.
+
+Aber: Schreibe niemals sensible Daten ins JWT! (tust du aktuell nicht)
+
+8. Error Handling
+Fehler werden offen an den Client kommuniziert (z. B. ob Username oder Passwort falsch).
+Tipp: Immer dieselbe Fehlermeldung, sonst lässt sich nicht erraten, welche Accounts existieren.
+
+9. Rate Limiting
+Kein explizites Rate Limiting auf der Login-Route (nur Lock nach 5 Fehlversuchen).
+
+Standard: API-Rate-Limiter (z. B. express-rate-limit) für Login & andere sensible Routen.
+
+Was könntest du noch besser machen (auf Production-Niveau)?
+2FA (wie du schon gefragt hast):
+
+Siehe vorherige Nachricht – TOTP oder E-Mail-Code als 2. Faktor nach Login.
+
+Refresh Tokens:
+
+Optional, aber hilft bei längeren Sessions.
+
+Passwort Reset per Mail:
+
+Für Nutzerfreundlichkeit unerlässlich.
+
+Mail-Bestätigung:
+
+Double-Opt-In zur Aktivierung.
+
+Logging/Audit:
+
+(Für Admin-Dashboards) Protokolliere kritische Aktionen (z. B. Login/Logout, Accountänderungen).
+
+Fazit:
+Dein Auth-System ist für kleine und mittlere Projekte bereits ziemlich sicher und sauber – viel besser als viele Open-Source-Projekte.
+
+Es fehlt aber noch an 2FA, Rate Limiting und evtl. Passwort-Reset/Mail-Bestätigung für echten Production-Standard.
+Wenn du das noch nachrüsten willst, helfe ich gern Schritt für Schritt!
