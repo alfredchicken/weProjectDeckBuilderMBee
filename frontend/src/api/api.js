@@ -1,35 +1,35 @@
+import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
+// Einmaligen Axios-Client anlegen
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+});
 
-//
-export const fetchWithAuth = async (url, options = {}) => {
-  let response = await fetch(url, { ...options, credentials: "include" });
-
-  if (response.status === 401) {
-    // Versuch Token-Refresh
-    const refreshResponse = await fetch(`${API_URL}/users/refresh`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (refreshResponse.ok) {
-      // Erneut probieren
-      response = await fetch(url, { ...options, credentials: "include" });
-    } else {
-      // Session abgelaufen
-      throw new Error("Session expired. Please log in again.");
+// Interceptor für Auth-Refresh
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await api.post("/users/refresh");
+        return api(originalRequest); // Request nochmal probieren
+      } catch {
+        throw new Error("Session expired. Please log in again.");
+      }
     }
+    return Promise.reject(error);
   }
-
-  return response;
-};
+);
 
 export const fetchCards = async () => {
   try {
-    const response = await fetch(`${API_URL}/cards`);
-    if (!response.ok) throw new Error("Keine Karten erhalten beim FetchCards");
-    const data = await response.json();
-    return data.data;
+    const response = await api.get("/cards");
+    return response.data.data;
   } catch (error) {
     console.error("Keine Karten erhalten bei FetchCards!", error);
     return [];
@@ -38,95 +38,48 @@ export const fetchCards = async () => {
 
 export const saveDeck = async (name, cards) => {
   const cardIds = cards.map((card) => card._id);
-
-  const response = await fetchWithAuth(`${API_URL}/decks`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, cards: cardIds }),
-  });
-
-  const text = await response.text();
-  console.log("Server Message", text);
-
-  let data;
   try {
-    data = JSON.parse(text);
-  } catch (err) {
-    throw new Error("Not a json:\n" + text);
+    const response = await api.post("/decks", { name, cards: cardIds });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Unknown error while saving deck");
   }
-
-  if (!response.ok) {
-    throw new Error(data.message || "Unknown error while saving deck");
-  }
-
-  return data;
 };
 
 export const fetchAllDecks = async () => {
-  const response = await fetchWithAuth(`${API_URL}/decks`, {
-    method: "GET",
-    credentials: "include", // include = Cookies werden mitgeschickt
-  });
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "Failed to load decks");
+  try {
+    const response = await api.get("/decks");
+    return response.data.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to load decks");
   }
-
-  const data = await response.json();
-  return data.data;
 };
 
 export const deleteDeck = async (deckId) => {
-  const response = await fetchWithAuth(`${API_URL}/decks/${deckId}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || "Fehler beim Löschen des Decks");
-  }
-
-  return response.json();
-};
-
-// Registrierung
-export const registerUser = async (name, email, password, recaptchaToken) => {
-  const response = await fetch(`${API_URL}/users`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password, recaptchaToken }),
-  });
-
-  let data;
   try {
-    data = await response.json();
-  } catch {
-    throw new Error("Ungültige Antwort vom Server");
+    const response = await api.delete(`/decks/${deckId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Fehler beim Löschen des Decks");
   }
-
-  if (!response.ok) {
-    throw new Error(data.message || "Fehler bei Registrierung");
-  }
-
-  return data;
 };
 
-// Login
+export const registerUser = async (name, email, password, recaptchaToken) => {
+  try {
+    const response = await api.post("/users", { name, email, password, recaptchaToken });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Fehler bei Registrierung");
+  }
+};
+
 export const loginUser = async (name, password) => {
-  const response = await fetch(`${API_URL}/users/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    // include = Cookies werden mitgeschickt
-    body: JSON.stringify({ name, password }),
-  });
-
-  const data = await response.json();
-  if (!response.ok) throw new Error("Failed to login!");
-  return data;
+  try {
+    const response = await api.post("/users/login", { name, password });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to login!");
+  }
 };
+
+export default api;

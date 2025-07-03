@@ -18,13 +18,11 @@ const Header = () => {
     <header>
       <nav>
         <div className="nav-left">
-          <Link to="/">Deck Builder</Link>
-          {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}
-        </div>
-        <div className="logo">
           <Link to="/">
             <img src="/logo.png" alt="Logo" />
           </Link>
+          <Link to="/">Deck Builder</Link>
+          {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}
         </div>
         <div className="nav-login">
           {!user ? (

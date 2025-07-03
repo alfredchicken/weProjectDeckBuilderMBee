@@ -24,7 +24,7 @@ export const createUser = async (req, res) => {
   console.log("Captcha Data:", captchaData);
 
   if (!captchaData.success) {
-    return res.status(400).json({ message: "Captcha verification failed!" });
+    return res.status(400).json({ message: "Captcha verifikation fehlgeschlagen" });
   }
 
   if (!name || !password || !email) {
@@ -46,7 +46,7 @@ export const createUser = async (req, res) => {
 
     // hash password with bcrypt
     const salt = await bcrypt.genSalt(10); // generiert ein Salt > A salt is a random string of characters and is added to a password before it is hashed
-    const hashedPassword = await bcrypt.hash(password, salt); // Hashiing password > Hashing means that password is converted into a unique, fixed value using a mathematical algorithm
+    const hashedPassword = await bcrypt.hash(password, salt); // Hashing password 
 
     const newUser = new User({ name, password: hashedPassword, email });
     await newUser.save();

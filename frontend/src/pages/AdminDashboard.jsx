@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import CardCreateForm from "../components/Admin/CardCreateForm";
 import CardDeleteList from "../components/Admin/CardDeleteList";
+import api from "../api/api";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,10 +12,13 @@ const AdminDashboard = () => {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_URL}/cards`)
-      .then((res) => res.json())
-      .then((data) => setCards(data.data || []))
-      .catch(() => toast.error("cards could not be loaded!"));
+    api
+      .get("/cards")
+      .then((res) => setCards(res.data.data || []))
+      .catch((err) => {
+        console.error("Error fetching cards:", err);
+        toast.error("Failed to load cards. Please try again later.");
+      });
   }, []);
 
   const addCard = (newCard) => setCards((prev) => [...prev, newCard]);

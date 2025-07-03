@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import api from "../../api/api";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -44,20 +45,13 @@ const CardCreateForm = ({ onAdd }) => {
         }
       });
 
-      const res = await fetch(`${API_URL}/cards`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Error creating card");
-      const data = await res.json();
-      onAdd(data.data);
+      const res = await api.post("/cards", formData);
+      onAdd(res.data.data);
       toast.success("Card created successfully!");
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.response?.data?.message || err.message || "Error creating card");
     }
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <h3>Create New Card</h3>

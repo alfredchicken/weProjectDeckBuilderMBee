@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import api from "../api/api";
 
-const API_URL = import.meta.env.VITE_API_URL;
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -8,43 +8,32 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch(`${API_URL}/users/me`, {
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      setUser({ name: data.name, role: data.role });
+      const res = await api.get("/users/me");
+      setUser({ name: res.data.name, role: res.data.role });
     } catch {
       setUser(null);
     }
   };
 
   const login = async (name, password) => {
-    const res = await fetch(`${API_URL}/users/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ name, password }),
-    });
-
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.message || "Login fehlgeschlagen");
+    try {
+      await api.post("/users/login", { name, password });
+      await checkAuth(); // Auth-Status nach dem Login aktualisieren
+    } catch (error) {
+      throw new Error(error.response?.data?.message || "Login fehlgeschlagen");
     }
-
-    await checkAuth(); // nach Login sofort prüfen
   };
 
   const logout = async () => {
-    await fetch(`${API_URL}/users/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+    try {
+      await api.post("/users/logout");
+    } catch (error) {}
     setUser(null);
   };
 
+  // Beim App-Start  prüfen, ob eingeloggt
   useEffect(() => {
-    checkAuth(); // beim Start prüfen
+    checkAuth();
   }, []);
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;

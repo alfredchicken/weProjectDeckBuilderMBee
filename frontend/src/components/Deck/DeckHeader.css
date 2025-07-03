@@ -2,21 +2,24 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  padding: 0 0 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 0 0 0;
+  color: white;
 }
 
 .deck-info {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: 16px;
   align-items: start;
+  margin-bottom: 8px;
 }
 
 .deck-header input {
-  height: 16px;
-  width: 25%;
-  padding: 8px;
+  padding: 0.5rem;
+  min-width: 140px;
+  border-radius: 8px;
+  border: 0px;
 }
 
 .deckbutton {
@@ -25,6 +28,28 @@
 
 .card-size-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: start;
+}
+
+.deck-info p {
+  display: flex;
+  margin: 4px 0;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .deckbutton {
+    margin: 0 2px;
+  }
+  .deck-header input {
+    width: 100%;
+  }
 }

@@ -24,11 +24,26 @@ const DeckHeader = ({
   <div className="deck-header">
     <div className="deck-info">
       <input className="deck-name-input" type="text" value={deckName} onChange={(e) => setDeckName(e.target.value)} />
-      <p>Cards in Deck: {deckLength}</p>
-      <p>Creatures: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "creature").length : 0}</p>
-      <p>Items: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "item").length : 0}</p>
-      <p>Places: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "place").length : 0}</p>
-      <p>Resources: {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "resource").length : 0}</p>
+      <p>Deck: {deckLength}</p>
+      <p>
+        {" "}
+        <img src="/images/icon_creature.webp" alt="Item Icon" class="icon" />×
+        {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "creature").length : 0}
+      </p>
+      <p>
+        <img src="/images/icon_item.webp" alt="Item Icon" class="icon" />×
+        {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "item").length : 0}
+      </p>
+      <p>
+        {" "}
+        <img src="/images/icon_place.webp" alt="Item Icon" class="icon" />×
+        {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "place").length : 0}
+      </p>
+      <p>
+        {" "}
+        <img src="/images/icon_ressource.webp" alt="Item Icon" class="icon" />×
+        {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "resource").length : 0}
+      </p>
     </div>
 
     <div className="card-size-controls">
