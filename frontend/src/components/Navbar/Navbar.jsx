@@ -9,11 +9,6 @@ const Header = () => {
   const { user, logout } = useAuth(); // useAuth Hook importieren
   const navigate = useNavigate(); // useNavigate Hook importieren
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
-
   return (
     <header>
       <nav>
@@ -29,10 +24,7 @@ const Header = () => {
             <Link to="/login">Login</Link>
           ) : (
             <>
-              <span>Welcome Back, {user.name}!</span>
-              <button onClick={handleLogout} alt="Logout">
-                <FontAwesomeIcon icon={faRightFromBracket} />
-              </button>
+              <Link to="/my-account">My Account</Link>
             </>
           )}
         </div>

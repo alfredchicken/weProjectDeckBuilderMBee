@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import api from "../../api/api";
+import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -8,14 +10,10 @@ const CardDeleteList = ({ cards, onDelete }) => {
   const handleDelete = async (cardID) => {
     if (!window.confirm("Do you really wanna delete that card?")) return;
     try {
-      const res = await fetch(`${API_URL}/cards/${cardID}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-      if (!res.ok) throw new Error("Error deleting card");
+      await api.delete(`/cards/${cardID}`);
       onDelete(cardID);
       toast.success("Card deleted successfully!");
-    } catch {
+    } catch (error) {
       toast.error("Error deleting card");
     }
   };

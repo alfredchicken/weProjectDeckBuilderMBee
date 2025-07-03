@@ -1,0 +1,64 @@
+.my-account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff99;
+  border-radius: 16px;
+  padding: 0 2rem 2rem 2rem;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.account-dashboard-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.account-dashboard-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.change-pw-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.my-account-container input {
+  width: 100%;
+  padding: 0.7rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.delete-account-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .my-account-container {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 16px;
+  }
+
+  .account-dashboard-header {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 16px;
+  }
+}

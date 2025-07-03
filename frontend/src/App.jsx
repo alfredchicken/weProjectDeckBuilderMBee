@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import DeckBuilder from "./pages/DeckBuilder";
 import Deck from "./components/Deck/Deck";
 import CardPool from "./components/CardPool/CardPool";
+import MyAccount from "./pages/MyAccount";
 import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={<DeckBuilder />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/my-account" element={<MyAccount />} />
         </Routes>
       </div>
       <Footer />

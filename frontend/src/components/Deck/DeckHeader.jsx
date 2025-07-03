@@ -27,21 +27,21 @@ const DeckHeader = ({
       <p>Deck: {deckLength}</p>
       <p>
         {" "}
-        <img src="/images/icon_creature.webp" alt="Item Icon" class="icon" />×
+        <img src="/images/icon_creature.webp" alt="Item Icon" className="icon" />×
         {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "creature").length : 0}
       </p>
       <p>
-        <img src="/images/icon_item.webp" alt="Item Icon" class="icon" />×
+        <img src="/images/icon_item.webp" alt="Item Icon" className="icon" />×
         {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "item").length : 0}
       </p>
       <p>
         {" "}
-        <img src="/images/icon_place.webp" alt="Item Icon" class="icon" />×
+        <img src="/images/icon_place.webp" alt="Item Icon" className="icon" />×
         {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "place").length : 0}
       </p>
       <p>
         {" "}
-        <img src="/images/icon_ressource.webp" alt="Item Icon" class="icon" />×
+        <img src="/images/icon_ressource.webp" alt="Item Icon" className="icon" />×
         {Array.isArray(deck) ? deck.filter((card) => card?.cardtype?.toLowerCase() === "resource").length : 0}
       </p>
     </div>

@@ -10,8 +10,15 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.get("/users/me");
       setUser({ name: res.data.name, role: res.data.role });
-    } catch {
-      setUser(null);
+    } catch (error) {
+      // Suppress "Session expired" error and 401 errors
+      if ((error.response && error.response.status === 401) || error.isAuthSessionExpired) {
+        setUser(null);
+      } else {
+        // Only log truly unexpected errors
+        // console.error("Auth check failed:", error);
+        setUser(null);
+      }
     }
   };
 

@@ -8,6 +8,7 @@ google recaptcha
 npm node-fetch für http requests 
 Socket.io
 fontawesome
+react tabs = für tabs
 axios > Mit Axios kannst du globale Interceptors einrichten (wie dein fetchWithAuth, aber für ALLE Requests). Z. B. kannst du automatisch auf 401 reagieren, den Token refreshen und den Request wiederholen –
 ohne dass du das überall manuell machen musst. Und Bei Axios bekommst du die Antwort direkt als JS-Objekt (response.data),
 bei fetch musst du immer noch await response.json() machen. Komfortable Fehlerbehandlung

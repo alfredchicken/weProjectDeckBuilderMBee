@@ -13,13 +13,21 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/users/login") &&
+      !originalRequest.url.includes("/users/refresh")
+    ) {
       originalRequest._retry = true;
       try {
         await api.post("/users/refresh");
         return api(originalRequest); // Request nochmal probieren
       } catch {
-        throw new Error("Session expired. Please log in again.");
+        const customError = new Error("Session expired. Please log in again.");
+        customError.isAuthSessionExpired = true;
+        return Promise.reject(customError);
       }
     }
     return Promise.reject(error);

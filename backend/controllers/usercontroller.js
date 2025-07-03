@@ -46,7 +46,7 @@ export const createUser = async (req, res) => {
 
     // hash password with bcrypt
     const salt = await bcrypt.genSalt(10); // generiert ein Salt > A salt is a random string of characters and is added to a password before it is hashed
-    const hashedPassword = await bcrypt.hash(password, salt); // Hashing password 
+    const hashedPassword = await bcrypt.hash(password, salt); // Hashing password
 
     const newUser = new User({ name, password: hashedPassword, email });
     await newUser.save();
@@ -63,6 +63,7 @@ export const deleteUser = async (req, res) => {
 
   try {
     const result = await User.deleteOne({ name });
+    console.log("Delete request for user:", name);
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ success: false, message: "User nicht gefunden!" });
@@ -77,24 +78,43 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { name } = req.params;
-  const { password, ...rest } = req.body; // Passwort vom Body rausnehmen
+  const { password, oldPassword, ...rest } = req.body; // Passwort vom Body rausnehmen
+  console.log("UpdateUser Body:", req.body);
+  console.log("UpdateUser Params:", req.params);
 
   try {
     const updates = { ...rest };
 
-    // neues Passwort?
-    if (password) {
-      console.log("Hashing neues Passwort...");
-      const salt = await bcrypt.genSalt(10);
-      updates.password = await bcrypt.hash(password, salt);
+    const user = await User.findOne({ name });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found!" });
     }
-    const updatedUser = await User.findOneAndUpdate({ name }, updates, { new: true });
+
+    // Passwort ändern?
+    if (password) {
+      // altes mitgeschickt?
+      if (!oldPassword) {
+        return res.status(400).json({ success: false, message: "Old password is required to change the password." });
+      }
+
+      // alter passwort prüfen
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ success: false, message: "Old password is incorrect." });
+      }
+
+      // wenn korrekt: neues hashen
+      const salt = await bcrypt.genSalt(10);
+      rest.password = await bcrypt.hash(password, salt);
+    }
+
+    const updatedUser = await User.findOneAndUpdate({ name }, rest, { new: true });
     if (!updatedUser) {
-      return res.status(404).json({ success: false, message: "User nicht gefunden!" });
+      return res.status(404).json({ success: false, message: "User not found!" });
     }
     res.status(200).json({ success: true, data: updatedUser });
   } catch (error) {
-    console.error("Fehler beim Updaten vom User:", error);
+    console.error("Error while updating user:", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
