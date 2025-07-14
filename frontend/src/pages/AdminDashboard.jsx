@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import CardCreateForm from "../components/Admin/CardCreateForm";
 import CardDeleteList from "../components/Admin/CardDeleteList";
 import api from "../api/api";
+import "./AdminDashboard.css";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -28,16 +30,25 @@ const AdminDashboard = () => {
   if (!user || user.role !== "admin") return <div>Nothing to see here...</div>;
 
   return (
-    <div>
-      <h2>Admin Dashboard</h2>
-      <CardCreateForm onAdd={addCard} />
-      <hr />
-      <CardDeleteList
-        cards={cards}
-        onDelete={(deletedID) => {
-          setCards((prev) => prev.filter((card) => card.cardID !== deletedID));
-        }}
-      />
+    <div className="admin-page-container">
+      <Tabs>
+        <TabList>
+          <Tab>Create Card</Tab>
+          <Tab>Delete Card</Tab>
+        </TabList>
+
+        <TabPanel>
+          <CardCreateForm onAdd={addCard} />
+        </TabPanel>
+        <TabPanel>
+          <CardDeleteList
+            cards={cards}
+            onDelete={(deletedID) => {
+              setCards((prev) => prev.filter((card) => card.cardID !== deletedID));
+            }}
+          />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 };

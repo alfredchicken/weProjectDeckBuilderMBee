@@ -78,6 +78,66 @@ button:hover {
   transform: scale(1.1);
 }
 
+/** Tabs Styles */
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  color: #fff;
+  font-weight: 700;
+  margin: 0 0;
+  padding: 0;
+}
+
+.react-tabs__tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 0%;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.react-tabs__tab {
+  display: inline-block;
+  border-bottom: none;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.react-tabs__tab:hover::after {
+  width: 100%;
+}
+
+.react-tabs__tab--selected {
+  background: #ffffff99;
+  border-color: #aaa;
+  color: #323232;
+  border-radius: 5px 5px 0 0;
+}
+
+.react-tabs__tab--disabled {
+  color: #fff;
+  cursor: default;
+}
+
+.react-tabs__tab:focus {
+  outline: none;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchAllDecks } from "../../api/api.js";
+import "./DeckLoadModal.css";
 
 const DeckLoadModal = ({ onClose, onLoad }) => {
   const [decks, setDecks] = useState([]);
