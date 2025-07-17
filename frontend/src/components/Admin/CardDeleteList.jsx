@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import api from "../../api/api";
 import "./CardDeleteList.css";
-import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

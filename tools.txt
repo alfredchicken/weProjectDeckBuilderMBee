@@ -1,4 +1,4 @@
-Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi, react-router-dom, toastify
+Mongoose express, Vite, React, Vanillatilt, bcryptjs, joi (Validierungen, z.b. login ohne < >), react-router-dom, toastify
 
 vanillatilt für kartentilt
 toastify für miniPopUps statt alerts.
@@ -9,9 +9,7 @@ npm node-fetch für http requests
 Socket.io
 fontawesome
 react tabs = für tabs
-axios > Mit Axios kannst du globale Interceptors einrichten (wie dein fetchWithAuth, aber für ALLE Requests). Z. B. kannst du automatisch auf 401 reagieren, den Token refreshen und den Request wiederholen –
-ohne dass du das überall manuell machen musst. Und Bei Axios bekommst du die Antwort direkt als JS-Objekt (response.data),
-bei fetch musst du immer noch await response.json() machen. Komfortable Fehlerbehandlung
+axios > Mit Axios kannst du globale Interceptors einrichten (wie dein fetchWithAuth, aber für ALLE Requests). Z. B. kannst du automatisch auf 401 reagieren, den Token refreshen und den Request wiederholen – ohne dass du das überall manuell machen musst. Und Bei Axios bekommst du die Antwort direkt als JSON-Objekt (response.data), bei fetch musst du immer noch await response.json() machen. Komfortable Fehlerbehandlung
 Axios wirft automatisch Exceptions bei HTTP-Errors (außer 2xx).
 Fetch wirft nur bei Netzwerkfehlern, sonst musst du alles selbst abfragen (if (!response.ok)).
 
@@ -19,3 +17,5 @@ Fetch wirft nur bei Netzwerkfehlern, sonst musst du alles selbst abfragen (if (!
 
 
 // Fuer praesi zeigen: 5 falsche loginversuche, 10 min locked.
+// Validierung mit <>
+// Upload nur png und webp erlaubt. Svg könnten z.b. scripte enthalten

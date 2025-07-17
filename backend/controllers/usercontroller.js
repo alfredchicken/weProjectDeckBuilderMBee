@@ -3,6 +3,7 @@ import User from "../models/usersmodel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fetch from "node-fetch";
+import userValidationSchema from "../models/userValidation.js";
 
 export const getUser = async (req, res) => {
   try {
@@ -15,6 +16,15 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
+  const { error } = userValidationSchema.validate(req.body, { abortEarly: false });
+
+  if (error) {
+    return res.status(400).json({
+      message: "Validation error",
+      details: error.details.map((detail) => detail.message),
+    });
+  }
+
   const { name, password, email, recaptchaToken } = req.body;
 
   const secretKey = process.env.RECAPTCHA_SECRET;

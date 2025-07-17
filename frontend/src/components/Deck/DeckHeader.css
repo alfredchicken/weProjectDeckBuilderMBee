@@ -45,6 +45,12 @@
   font-weight: 500;
 }
 
+.deck-sort-select {
+  padding: 0.5rem;
+  min-width: 140px;
+  border-radius: 8px;
+}
+
 @media screen and (max-width: 768px) {
   .deckbutton {
     margin: 0 2px;

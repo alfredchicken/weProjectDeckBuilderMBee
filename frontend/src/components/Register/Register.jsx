@@ -10,7 +10,10 @@ const RegisterSchema = Yup.object().shape({
   name: Yup.string()
     .required("Please enter a username")
     .matches(/^[^<>]*$/, "Username must not contain < or >"),
-  email: Yup.string().email("Please enter a valid email address").required("Please enter an email address"),
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("Please enter an email address")
+    .matches(/^[^<>]*$/, "E-Mail must not contain < or >"),
   password: Yup.string()
     .min(8, "At least 8 characters")
     .matches(/[A-Z]/, "At least one uppercase letter")

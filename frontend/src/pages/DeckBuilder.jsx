@@ -8,6 +8,7 @@ import Deck from "../components/Deck/Deck.jsx";
 import "./DeckBuilder.css";
 import DeckLoadModal from "../components/Deck/DeckLoadModal.jsx";
 import { set } from "mongoose";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const DeckBuilder = () => {
   const [cardPool, setCardPool] = useState([]);
@@ -89,15 +90,34 @@ const DeckBuilder = () => {
 
   return (
     <>
-      <div className="tab-buttons mobile-only">
-        <button onClick={() => setActiveTab("pool")} className={activeTab === "pool" ? "active" : ""}>
-          Card Pool
-        </button>
-        <button onClick={() => setActiveTab("deck")} className={activeTab === "deck" ? "active" : ""}>
-          Deck
-        </button>
+      <div className="mobile-only">
+        <Tabs>
+          <TabList>
+            <Tab>Card Pool</Tab>
+            <Tab>Deck</Tab>
+          </TabList>
+
+          <TabPanel>
+            <CardPool cards={cardPool} onSelect={setSelectedCard} loading={loading} />
+            {selectedCard && <CardModal card={selectedCard} onClose={() => setSelectedCard(null)} onAddToDeck={handleAddToDeck} deck={deck} />}
+          </TabPanel>
+          <TabPanel>
+            <Deck
+              deck={deck}
+              deckName={deckName}
+              setDeckName={setDeckName}
+              onSave={handleSaveDeck}
+              onClear={() => setDeck([])}
+              onRemove={handleRemoveFromDeck}
+              onOpenLoadModal={() => setShowLoadModal(true)}
+              onDelete={handleDeleteDeck}
+            />
+            {showLoadModal && <DeckLoadModal onClose={() => setShowLoadModal(false)} onLoad={handleLoadDeck} />}
+          </TabPanel>
+        </Tabs>
       </div>
-      <div className="deckbuilder-layout">
+
+      <div className="deckbuilder-layout hide-mobile">
         <div className={`half ${activeTab === "pool" ? "visible" : "hidden-on-mobile"}`}>
           <CardPool cards={cardPool} onSelect={setSelectedCard} loading={loading} />
         </div>

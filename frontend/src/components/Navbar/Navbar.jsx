@@ -14,7 +14,7 @@ const Header = () => {
       <nav>
         <div className="nav-left">
           <Link to="/">
-            <img src="/logo.png" alt="Logo" />
+            <img className="logo" src="../../../src/assets/Logo_EverythingCardGame.webp" alt="Logo" />
           </Link>
           <Link to="/">Deck Builder</Link>
           {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}

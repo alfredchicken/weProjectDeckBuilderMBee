@@ -45,7 +45,8 @@ nav {
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-items: center;
+  gap: 3rem;
 }
 
 .nav-login {
@@ -55,7 +56,6 @@ nav {
 }
 
 .logo {
-  justify-content: center;
-  flex: 1;
-  text-align: center;
+  padding-top: 8px;
+  width: 120px;
 }
