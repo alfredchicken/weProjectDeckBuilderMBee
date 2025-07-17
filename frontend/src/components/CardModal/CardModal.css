@@ -107,6 +107,7 @@ ul {
 .add-to-deck {
   margin-top: 1rem;
   text-align: center;
+  width: 50%;
 }
 
 /* Animations */

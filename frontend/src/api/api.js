@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -39,8 +40,7 @@ export const fetchCards = async () => {
     const response = await api.get("/cards");
     return response.data.data;
   } catch (error) {
-    console.error("Keine Karten erhalten bei FetchCards!", error);
-    return [];
+    throw new Error(error.response?.data?.message || "Cards could not be loaded.");
   }
 };
 

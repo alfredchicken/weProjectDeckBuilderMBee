@@ -7,7 +7,9 @@ import ReCaptcha from "react-google-recaptcha";
 import "./Register.css";
 
 const RegisterSchema = Yup.object().shape({
-  name: Yup.string().required("Please enter a username"),
+  name: Yup.string()
+    .required("Please enter a username")
+    .matches(/^[^<>]*$/, "Username must not contain < or >"),
   email: Yup.string().email("Please enter a valid email address").required("Please enter an email address"),
   password: Yup.string()
     .min(8, "At least 8 characters")

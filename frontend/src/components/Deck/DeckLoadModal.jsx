@@ -30,7 +30,7 @@ const DeckLoadModal = ({ onClose, onLoad }) => {
           ) : (
             decks.map((deck) => (
               <li key={deck._id}>
-                <button onClick={() => onLoad(deck)}>
+                <button className="deckload-button" onClick={() => onLoad(deck)}>
                   {deck.name} ({deck.cards.length} Cards)
                 </button>
               </li>

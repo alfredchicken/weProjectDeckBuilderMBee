@@ -3,7 +3,7 @@ import "./CardPool.css";
 import FilterBar from "./FilterBar";
 import CardGrid from "./CardGrid";
 
-const CardPool = ({ cards, onSelect }) => {
+const CardPool = ({ cards, onSelect, loading }) => {
   const [filteredCards, setFilteredCards] = useState([]);
   const [filters, setFilters] = useState({
     type: "",
@@ -68,7 +68,7 @@ const CardPool = ({ cards, onSelect }) => {
         uniqueValues={uniqueValues}
         onClearFilters={clearFilters}
       />
-      <CardGrid cards={filteredCards} cardSize={cardSize} onSelect={onSelect} />
+      <CardGrid cards={filteredCards} cardSize={cardSize} onSelect={onSelect} loading={loading} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import CardModal from "../components/CardModal/CardModal.jsx";
 import Deck from "../components/Deck/Deck.jsx";
 import "./DeckBuilder.css";
 import DeckLoadModal from "../components/Deck/DeckLoadModal.jsx";
+import { set } from "mongoose";
 
 const DeckBuilder = () => {
   const [cardPool, setCardPool] = useState([]);
@@ -16,12 +17,21 @@ const DeckBuilder = () => {
   const [showLoadModal, setShowLoadModal] = useState(false);
   const [deckId, setDeckId] = useState(null);
   const [activeTab, setActiveTab] = useState("pool");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const loadCards = async () => {
-      const fetchedCards = await fetchCards();
-      console.log("Loaded Cards: ", fetchedCards);
-      setCardPool(fetchedCards);
+      try {
+        const fetchedCards = await fetchCards();
+        setCardPool(fetchedCards);
+      } catch (error) {
+        console.log("CATCH ERROR FRONTEND!", error);
+        setError("Failed to load cards. Please try again.");
+        toast.error("Failed to load cards. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     };
     loadCards();
   }, []);
@@ -89,7 +99,7 @@ const DeckBuilder = () => {
       </div>
       <div className="deckbuilder-layout">
         <div className={`half ${activeTab === "pool" ? "visible" : "hidden-on-mobile"}`}>
-          <CardPool cards={cardPool} onSelect={setSelectedCard} />
+          <CardPool cards={cardPool} onSelect={setSelectedCard} loading={loading} />
         </div>
         <div className={`half ${activeTab === "deck" ? "visible" : "hidden-on-mobile"}`}>
           <Deck
