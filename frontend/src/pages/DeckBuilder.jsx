@@ -7,7 +7,6 @@ import CardModal from "../components/CardModal/CardModal.jsx";
 import Deck from "../components/Deck/Deck.jsx";
 import "./DeckBuilder.css";
 import DeckLoadModal from "../components/Deck/DeckLoadModal.jsx";
-import { set } from "mongoose";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const DeckBuilder = () => {

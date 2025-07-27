@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   mongodb:
     image: mongo
@@ -9,6 +10,35 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: IwTLJS2025
     volumes:
       - deckbuilder-data:/data/db
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: deckbuilder-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - MONGO_URI=mongodb://bee:IwTLJS2025@mongodb:27017
+      - PORT=5000
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: deckbuilder-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
 
 volumes:
   deckbuilder-data:

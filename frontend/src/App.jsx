@@ -22,7 +22,6 @@ function App() {
     socket.on("new_card", (data) => {
       toast.info(`New card "${data.name}" added!`);
     });
-    // Optional: Clean up Listener
     return () => socket.off("new_card");
   }, []);
 

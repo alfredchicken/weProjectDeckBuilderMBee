@@ -13,23 +13,21 @@ export const getCards = async (req, res) => {
   }
 };
 
-// Post - Karte erstellen
+// P
 export const createCard = async (req, res) => {
   // automatische Umwandlung: string zu array, weil ich später mehr als nur einfarbige Kartentypen erstellt habe.
   if (typeof req.body.type === "string") {
     req.body.type = req.body.type.split(",").map((t) => t.trim());
   }
 
-  // Bild-URL einfügen (vor Validation!)
   let imgURL = req.body.imgURL || "";
   if (req.file) {
     imgURL = req.file.filename;
   }
-  req.body.imgURL = imgURL; // <-- HIER: imgURL in req.body setzen
+  req.body.imgURL = imgURL; 
 
   console.log("New Card Request:", req.body, req.file);
 
-  // Jetzt validieren!
   const { error } = cardSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
@@ -46,7 +44,7 @@ export const createCard = async (req, res) => {
     io.emit("new_card", { name: newCard.name, cardID: newCard.cardID });
     res.status(201).json({ success: true, data: newCard });
   } catch (e) {
-    console.error("Fehler beim speichern der Karte auf die Datenbank", e);
+    console.error("Error saving card in database", e);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -59,12 +57,12 @@ export const deleteCard = async (req, res) => {
     const result = await Card.deleteOne({ cardID });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ success: false, message: "Karte wurde in der DB nicht gefunden!" });
+      return res.status(404).json({ success: false, message: "card in database not found" });
     }
 
-    res.json({ success: true, message: "Karte erfolgreich gelöscht!" });
+    res.json({ success: true, message: "Card was deleted!" });
   } catch (error) {
-    console.error("Fehler beim Löschen der Karte aus der Datenbank");
+    console.error("Error while deleting card");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };

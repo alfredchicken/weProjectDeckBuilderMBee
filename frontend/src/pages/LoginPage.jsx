@@ -1,7 +1,7 @@
 import Register from "../components/Register/Register";
-import Login from "../components/Login/Login";
+import Login from "../components/Login/login";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "./loginPage.css";
+import "./LoginPage.css";
 
 const LoginPage = () => (
   <div className="login-page-container">

@@ -16,8 +16,9 @@ const CardPool = ({ cards, onSelect, loading }) => {
   });
   const [cardSize, setCardSize] = useState(120);
 
-  // Hilfsfunktion für Dropdowns (z. B. FilterBar)
+  // Dropdown-Hilfsfunktion
   const uniqueValues = (key) => {
+    if (!Array.isArray(cards)) return [];
     const seen = new Set();
     cards.forEach((card) => {
       const value = card[key];
@@ -27,20 +28,31 @@ const CardPool = ({ cards, onSelect, loading }) => {
     return [...seen].sort().map((val) => val.charAt(0).toUpperCase() + val.slice(1));
   };
 
-  // Filter-Logik
+  // Filter-Funktion
   useEffect(() => {
+    if (!Array.isArray(cards)) {
+      setFilteredCards([]);
+      return;
+    }
+
     let result = [...cards];
-    if (filters.search) result = result.filter((c) => c.name.toLowerCase().includes(filters.search.toLowerCase()));
-    if (filters.type) result = result.filter((c) => Array.isArray(c.type) && c.type.some((t) => t.toLowerCase() === filters.type.toLowerCase()));
+    if (filters.search)
+      result = result.filter((c) => c.name.toLowerCase().includes(filters.search.toLowerCase()));
+    if (filters.type)
+      result = result.filter(
+        (c) => Array.isArray(c.type) && c.type.some((t) => t.toLowerCase() === filters.type.toLowerCase())
+      );
     if (filters.tribe) result = result.filter((c) => c.tribe?.toLowerCase() === filters.tribe.toLowerCase());
     if (filters.rarity) result = result.filter((c) => c.rarity === filters.rarity);
     if (filters.cardtype) result = result.filter((c) => c.cardtype === filters.cardtype);
     if (filters.playcost) result = result.filter((c) => c.playcost === Number(filters.playcost));
     if (filters.sort === "attack-asc") result.sort((a, b) => a.attack - b.attack);
     if (filters.sort === "attack-desc") result.sort((a, b) => b.attack - a.attack);
+
     setFilteredCards(result);
   }, [filters, cards]);
 
+  // Event-Handler
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));

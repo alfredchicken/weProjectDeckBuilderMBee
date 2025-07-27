@@ -9,8 +9,8 @@ import axios from "axios";
 import api from "../../api/api";
 
 const AccountDashboard = () => {
-  const { user, logout } = useAuth(); // useAuth Hook importieren
-  const navigate = useNavigate(); // useNavigate Hook importieren
+  const { user, logout } = useAuth(); 
+  const navigate = useNavigate(); 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -42,7 +42,7 @@ const AccountDashboard = () => {
     try {
       const response = await api.put(`/users/${user.name}`, {
         oldPassword,
-        password: newPassword, // send newPassword as 'password'
+        password: newPassword, // send newPassword als 'password'
       });
 
       toast.success("Password succesfully changed!");

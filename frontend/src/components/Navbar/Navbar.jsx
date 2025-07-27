@@ -1,13 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useEffect, useState } from "react";
 import "./Navbar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
 
 const Header = () => {
-  const { user, logout } = useAuth(); // useAuth Hook importieren
-  const navigate = useNavigate(); // useNavigate Hook importieren
+  const { user } = useAuth(); 
 
   return (
     <header>

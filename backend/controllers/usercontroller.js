@@ -3,7 +3,7 @@ import User from "../models/usersmodel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fetch from "node-fetch";
-import userValidationSchema from "../models/userValidation.js";
+import userValidationSchema from "../models/uservalidation.js";
 
 export const getUser = async (req, res) => {
   try {

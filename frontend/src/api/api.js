@@ -1,15 +1,14 @@
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Einmaligen Axios-Client anlegen
+// Axios-Client
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
 });
 
-// Interceptor für Auth-Refresh
+// Interceptor für Auth-Refresh (Tokens erneuern)
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
