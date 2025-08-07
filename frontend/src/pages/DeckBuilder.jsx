@@ -110,6 +110,7 @@ const DeckBuilder = () => {
               onRemove={handleRemoveFromDeck}
               onOpenLoadModal={() => setShowLoadModal(true)}
               onDelete={handleDeleteDeck}
+              onAddCardToDeck={handleAddToDeck}
             />
             {showLoadModal && <DeckLoadModal onClose={() => setShowLoadModal(false)} onLoad={handleLoadDeck} />}
           </TabPanel>
@@ -130,6 +131,7 @@ const DeckBuilder = () => {
             onRemove={handleRemoveFromDeck}
             onOpenLoadModal={() => setShowLoadModal(true)}
             onDelete={handleDeleteDeck}
+            onAddCardToDeck={handleAddToDeck}
           />
         </div>
 

@@ -3,9 +3,10 @@ import { toPng } from "html-to-image";
 import "./DeckGrid.css";
 import Spinner from "../Spinner/Spinner";
 
-const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady, sortedDeck }) => {
+const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady, sortedDeck, onAddCardToDeck }) => {
   const deckRef = useRef(null);
   const [loadingExport, setLoadingExport] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
 
   useEffect(() => {
     if (!onExportReady || !deckRef.current) return;
@@ -48,8 +49,25 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
 
   return (
     <>
-      <div className="deck-cards" ref={deckRef} style={{ "--card-size": `${cardDeckSize}px` }}>
-        {(sortedDeck || []).map((card, index) => (
+      <div
+      className={`deck-cards${isDragOver ? " drag-over" : ""}`}
+        ref={deckRef}
+        style={{ "--card-size": `${cardDeckSize}px` }}
+      onDragOver={e => {
+        e.preventDefault();
+        setIsDragOver(true);
+      }}
+      onDragLeave={() => setIsDragOver(false)}
+      onDrop={e => {
+        e.preventDefault();
+        setIsDragOver(false);
+        const cardData = e.dataTransfer.getData("application/json");
+        if (cardData && onAddCardToDeck) {
+          const card = JSON.parse(cardData);
+          onAddCardToDeck(card);
+        }
+      }}
+        >        {(sortedDeck || []).map((card, index) => (
           <div
             key={`${card.cardID}-${index}`}
             className={`card ${removingIndex === index ? "fade-out" : ""}`}

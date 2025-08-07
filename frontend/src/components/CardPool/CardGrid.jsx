@@ -9,7 +9,12 @@ const CardGrid = ({ cards, cardSize, onSelect, loading }) => {
   return (
     <div className="cards-container" style={{ "--card-size": `${cardSize}px` }}>
       {cards.map((card) => (
-        <div key={card.cardID} className="card" onClick={() => onSelect(card)}>
+        <div key={card.cardID}
+        className="card" onClick={() => onSelect(card)}
+        draggable
+        onDragStart={(e) => {
+      e.dataTransfer.setData("application/json", JSON.stringify(card));
+    }}>
           <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="img-pool" />
         </div>
       ))}

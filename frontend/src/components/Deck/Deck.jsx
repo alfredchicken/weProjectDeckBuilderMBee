@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import DeckHeader from "./DeckHeader";
 import DeckGrid from "./DeckGrid";
 
-const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLoadModal, onDelete }) => {
+const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLoadModal, onDelete, onAddCardToDeck }) => {
   const [cardDeckSize, setCardDeckSize] = useState(120);
   const [removingIndex, setRemovingIndex] = useState(null);
   const [exportDeck, setExportDeck] = useState(() => () => {});
@@ -58,6 +58,7 @@ const handleSortChange = (sortType) => {
         removingIndex={removingIndex}
         setRemovingIndex={setRemovingIndex}
         onExportReady={setExportDeck}
+        onAddCardToDeck={onAddCardToDeck}
       />
     </div>
   );

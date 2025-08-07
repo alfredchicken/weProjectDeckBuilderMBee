@@ -26,3 +26,12 @@
   object-fit: contain;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.deck-cards {
+  min-height: 100%; 
+  transition: background 0.2s;
+  border-radius: 16px;
+}
+.deck-cards.drag-over {
+  background: #ffffff77; /* highlight when dragging over */
+}
