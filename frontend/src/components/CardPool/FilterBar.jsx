@@ -1,7 +1,7 @@
 import React from "react";
 import "./FilterBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
 const FilterBar = ({ filters, cardSize, onFilterChange, onCardSizeChange, uniqueValues, onClearFilters }) => (
     <div className="filter-bar">
@@ -15,8 +15,8 @@ const FilterBar = ({ filters, cardSize, onFilterChange, onCardSizeChange, unique
           onChange={onFilterChange}
         />
         <div className="card-size-controls">
-          <button onClick={() => onCardSizeChange(Math.max(cardSize - 10, 80))}>−</button>
-          <button onClick={() => onCardSizeChange(Math.min(cardSize + 10, 200))}>+</button>
+          <button title="Image Size -"onClick={() => onCardSizeChange(Math.max(cardSize - 10, 80))}>−</button>
+          <button title="Image Size +" onClick={() => onCardSizeChange(Math.min(cardSize + 10, 200))}>+</button>
         </div>
       </div>
 
@@ -37,11 +37,12 @@ const FilterBar = ({ filters, cardSize, onFilterChange, onCardSizeChange, unique
         <option value="">Sort by</option>
         <option value="attack-asc">Attack Ascending</option>
         <option value="attack-desc">Attack Descending</option>
+        <option value="playcost">Playcost</option>
       </select>
 
-      <button onClick={onClearFilters}>
+      <button title="Reset Filters" onClick={onClearFilters}>
         {" "}
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon icon={faArrowRotateLeft} />
       </button>
     </div>
 );

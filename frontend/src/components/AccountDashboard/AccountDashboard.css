@@ -53,12 +53,12 @@ h1 {
   .my-account-container {
     flex-direction: column;
     align-items: center;
-    margin: 0 16px;
+    margin: 0;
   }
 
   .account-dashboard-header {
     flex-direction: column;
     align-items: center;
-    margin: 0 16px;
+    margin: 0;
   }
 }

@@ -67,7 +67,7 @@ export const deleteDeck = async (deckId) => {
     const response = await api.delete(`/decks/${deckId}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Fehler beim Löschen des Decks");
+    throw new Error(error.response?.data?.message || "Error deleting Deck");
   }
 };
 
@@ -76,7 +76,7 @@ export const registerUser = async (name, email, password, recaptchaToken) => {
     const response = await api.post("/users", { name, email, password, recaptchaToken });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Fehler bei Registrierung");
+    throw new Error(error.response?.data?.message || "Error while register user");
   }
 };
 

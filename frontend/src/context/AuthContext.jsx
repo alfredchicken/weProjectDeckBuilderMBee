@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       await api.post("/users/login", { name, password });
       await checkAuth(); // Auth-Status nach dem Login aktualisieren
     } catch (error) {
-      throw new Error(error.response?.data?.message || "Login fehlgeschlagen");
+      throw new Error(error.response?.data?.message || "Login failed");
     }
   };
 

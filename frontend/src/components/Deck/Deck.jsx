@@ -9,19 +9,26 @@ const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLo
   const [exportDeck, setExportDeck] = useState(() => () => {});
   const [sortedDeck, setSortedDeck] = useState(deck);
 
-  const handleSortChange = (sortType) => {
-    if (sortType === "creature-place-item") {
-      const order = { creature: 1, place: 2, item: 3, resource: 4 };
-      const sorted = [...deck].sort((a, b) => {
-        const typeA = a.cardtype?.toLowerCase() || "";
-        const typeB = b.cardtype?.toLowerCase() || "";
-        return (order[typeA] || 999) - (order[typeB] || 999);
-      });
-      setSortedDeck(sorted);
-    } else {
-      setSortedDeck(deck); // fall back to original order
-    }
-  };
+const handleSortChange = (sortType) => {
+  if (sortType === "creature-place-item") {
+    const order = { creature: 1, place: 2, item: 3, resource: 4 };
+    const sorted = [...deck].sort((a, b) => {
+      const typeA = a.cardtype?.toLowerCase() || "";
+      const typeB = b.cardtype?.toLowerCase() || "";
+      return (order[typeA] || 999) - (order[typeB] || 999);
+    });
+    setSortedDeck(sorted);
+  } else if (sortType === "playcost") {
+    const sorted = [...deck].sort((a, b) => {
+      const costA = Number(a.playcost) || 0;
+      const costB = Number(b.playcost) || 0;
+      return costA - costB;
+    });
+    setSortedDeck(sorted);
+  } else {
+    setSortedDeck(deck); // fall back to original order
+  }
+};
 
   useEffect(() => {
     setSortedDeck(deck);

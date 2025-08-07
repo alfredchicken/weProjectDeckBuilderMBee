@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import User from "../models/usersmodel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -10,7 +9,7 @@ export const getUser = async (req, res) => {
     const users = await User.find({});
     res.status(200).json({ success: true, data: users });
   } catch (error) {
-    console.log("Fehler beim laden des Users von der Datenbank");
+    console.log("Error loading User from db");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
@@ -135,7 +134,7 @@ export const loginUser = async (req, res) => {
   const { name, password } = req.body;
 
   if (!name || !password) {
-    return res.status(400).json({ message: "Name und Passwort sind nötig" });
+    return res.status(400).json({ message: "Name und Passwort required." });
   }
 
   try {

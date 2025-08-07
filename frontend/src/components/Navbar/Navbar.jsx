@@ -13,7 +13,6 @@ const Header = () => {
           <Link to="/">
             <img className="logo" src="../../../src/assets/Logo_EverythingCardGame.webp" alt="Logo" />
           </Link>
-          <Link to="/">Deck Builder</Link>
           {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}
         </div>
         <div className="nav-login">

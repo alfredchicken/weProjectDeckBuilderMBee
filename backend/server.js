@@ -4,7 +4,6 @@ import { connectDB } from "./config/db.js";
 import cardRoutes from "./routes/cardroute.js";
 import deckRoutes from "./routes/deckroute.js";
 import userRoutes from "./routes/userroute.js";
-import userModel from "./models/usersmodel.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";

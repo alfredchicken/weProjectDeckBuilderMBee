@@ -8,7 +8,7 @@ export const getCards = async (req, res) => {
     const cards = await Card.find({});
     res.status(200).json({ success: true, data: cards });
   } catch (error) {
-    console.log("Fehler beim Laden der Karten von der Datenbank");
+    console.log("Error while loading cards from db");
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };

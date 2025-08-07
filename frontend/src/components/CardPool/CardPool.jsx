@@ -48,6 +48,7 @@ const CardPool = ({ cards, onSelect, loading }) => {
     if (filters.playcost) result = result.filter((c) => c.playcost === Number(filters.playcost));
     if (filters.sort === "attack-asc") result.sort((a, b) => a.attack - b.attack);
     if (filters.sort === "attack-desc") result.sort((a, b) => b.attack - a.attack);
+    if (filters.sort === "playcost") result.sort((a, b) => a.playcost - b.playcost);
 
     setFilteredCards(result);
   }, [filters, cards]);

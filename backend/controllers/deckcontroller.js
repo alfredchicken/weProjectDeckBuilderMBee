@@ -1,5 +1,4 @@
 import Deck from "../models/deckmodel.js";
-import Card from "../models/cardmodel.js";
 import mongoose from "mongoose";
 
 export const createDeck = async (req, res) => {
@@ -20,7 +19,7 @@ export const createDeck = async (req, res) => {
     if (invalidCards.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Eine oder mehr ObjectIDs sind ungültig.",
+        message: "One or more ObjectIds(Cards) are INValid.",
         invalidCardIDs: invalidCards,
       });
     }
@@ -31,12 +30,12 @@ export const createDeck = async (req, res) => {
     res.status(201).json({
       success: true,
       data: savedDeck,
-      message: "Deck gespeichert!",
+      message: "Deck saved!",
     });
   } catch (error) {
-    console.error("Fehler beim speichern des Decks in die Datenbank", error);
+    console.error("Error while saving deck in db", error);
 
-    res.status(500).json({ success: false, message: "Server error während dem Deck speichern." });
+    res.status(500).json({ success: false, message: "Server error while saving deck." });
   }
 };
 
