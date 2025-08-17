@@ -28,7 +28,7 @@
 }
 
 .deck-cards {
-  min-height: 100%; 
+  min-height: 70%;
   transition: background 0.2s;
   border-radius: 16px;
 }
