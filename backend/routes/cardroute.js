@@ -1,6 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
-import Card from "../models/cardmodel.js";
 import { createCard, deleteCard, getCards, updateCard } from "../controllers/cardcontroller.js";
 import { adminOnly } from "../middleware/admin.js";
 import { protect } from "../middleware/userauthMiddleware.js";

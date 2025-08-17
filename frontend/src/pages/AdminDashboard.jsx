@@ -25,8 +25,6 @@ const AdminDashboard = () => {
 
   const addCard = (newCard) => setCards((prev) => [...prev, newCard]);
 
-  const removeCard = (cardID) => setCards((prev) => prev.filter((card) => card._id !== cardID));
-
   if (!user || user.role !== "admin") return <div>Nothing to see here...</div>;
 
   return (

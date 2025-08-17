@@ -34,10 +34,10 @@ const Login = () => {
         <Form className="login-form">
           <h2>Login</h2>
           <Field type="text" name="name" placeholder="Username" />
-          <ErrorMessage name="name" component="div" style={{ color: "red" }} />
+          <ErrorMessage name="name" component="div" style={{ color: "white", backgroundColor: "#ff512f", borderRadius: "8px", paddingLeft: "8px" }} />
 
-          <Field type="password" name="password" placeholder="Passwort" />
-          <ErrorMessage name="password" component="div" style={{ color: "red" }} />
+          <Field type="password" name="password" placeholder="Password" />
+          <ErrorMessage name="password" component="div" style={{ color: "white", backgroundColor: "#ff512f", borderRadius: "8px", paddingLeft: "8px" }} />
 
           <button type="submit" disabled={isSubmitting}>
             Login

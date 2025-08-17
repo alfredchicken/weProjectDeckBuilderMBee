@@ -2,8 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Navbar/Navbar";
 import LoginPage from "./pages/LoginPage";
 import DeckBuilder from "./pages/DeckBuilder";
-import Deck from "./components/Deck/Deck";
-import CardPool from "./components/CardPool/CardPool";
 import MyAccount from "./pages/MyAccount";
 import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";

@@ -66,7 +66,7 @@ const CardCreateForm = ({ onAdd }) => {
       <form onSubmit={handleSubmit}>
         <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required />
         <input name="cardID" value={form.cardID} onChange={handleChange} placeholder="CardID" required />
-        <input name="type" value={form.type.join(", ")} onChange={handleChange} placeholder="Typen (Separate with Comma)" required />
+        <input name="type" value={form.type.join(", ")} onChange={handleChange} placeholder="Types (Separate with Comma)" required />
         <div className="card-stats">
           <label htmlFor="attack">Attack:</label>
           <input name="attack" type="number" value={form.attack} onChange={handleChange} placeholder="Attack" required />

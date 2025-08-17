@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchCards, saveDeck, deleteDeck } from "../api/api.js";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CardPool from "../components/CardPool/CardPool.jsx";
 import CardModal from "../components/CardModal/CardModal.jsx";
@@ -16,7 +16,6 @@ const DeckBuilder = () => {
   const [deckName, setDeckName] = useState("My Deckname");
   const [showLoadModal, setShowLoadModal] = useState(false);
   const [deckId, setDeckId] = useState(null);
-  const [activeTab, setActiveTab] = useState("pool");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const DeckBuilder = () => {
         const fetchedCards = await fetchCards();
         setCardPool(fetchedCards);
       } catch (error) {
-        console.log("CATCH ERROR FRONTEND!", error);
+        console.log("Catch error im frontend!", error);
         setError("Failed to load cards. Please try again.");
         toast.error("Failed to load cards. Please try again.");
       } finally {
@@ -118,10 +117,10 @@ const DeckBuilder = () => {
       </div>
 
       <div className="deckbuilder-layout hide-mobile">
-        <div className={`half ${activeTab === "pool" ? "visible" : "hidden-on-mobile"}`}>
+        <div className="pool half hide-mobile">
           <CardPool cards={cardPool} onSelect={setSelectedCard} loading={loading} />
         </div>
-        <div className={`half ${activeTab === "deck" ? "visible" : "hidden-on-mobile"}`}>
+        <div className="deck half hide-mobile">
           <Deck
             deck={deck}
             deckName={deckName}

@@ -1,5 +1,4 @@
 import Card from "../models/cardmodel.js";
-import mongoose from "mongoose";
 import cardSchema from "../models/cardvalidation.js";
 import { io } from "../server.js";
 
@@ -13,7 +12,7 @@ export const getCards = async (req, res) => {
   }
 };
 
-// P
+// karte erstellen
 export const createCard = async (req, res) => {
   // automatische Umwandlung: string zu array, weil ich später mehr als nur einfarbige Kartentypen erstellt habe.
   if (typeof req.body.type === "string") {
