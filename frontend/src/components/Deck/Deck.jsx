@@ -2,6 +2,7 @@ import "./Deck.css";
 import { useState, useEffect } from "react";
 import DeckHeader from "./DeckHeader";
 import DeckGrid from "./DeckGrid";
+import { toast } from "react-toastify";
 
 const Deck = ({ deck, deckName, setDeckName, onSave, onClear, onRemove, onOpenLoadModal, onDelete, onAddCardToDeck }) => {
   const [cardDeckSize, setCardDeckSize] = useState(120);
@@ -30,6 +31,26 @@ const handleSortChange = (sortType) => {
   }
 };
 
+const handleExportList = () => {
+  if (!deck || deck.length === 0) {
+    toast.error("No deck to export");
+    return;
+  }
+  const lines = deck.map(card => `${card.name},${card.cardID},${card.cardtype}`);
+  const content = ["Name,CardID,CardType", ...lines].join("\n");
+  const blob = new Blob([content], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${deckName || "deck"}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  toast.success("Deck exported as CSV");
+ }
+
   useEffect(() => {
     setSortedDeck(deck);
   }, [deck]);
@@ -49,6 +70,7 @@ const handleSortChange = (sortType) => {
         onDelete={onDelete}
         onExport={exportDeck}
         onSortChange={handleSortChange}
+        onExportList={handleExportList}
       />
       <DeckGrid
         deck={deck}

@@ -6,6 +6,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faFileImport } from "@fortawesome/free-solid-svg-icons";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
+import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 const DeckHeader = ({
   deck,
@@ -20,6 +21,7 @@ const DeckHeader = ({
   onDelete,
   onExport,
   onSortChange,
+  onExportList,
 }) => (
   <div className="deck-header">
     <div className="deck-info">
@@ -61,7 +63,7 @@ const DeckHeader = ({
       </button>
       <button title="Load Deck" onClick={onOpenLoadModal} className="deckbutton" alt="Load Deck">
         {" "}
-        <FontAwesomeIcon icon={faFileImport} />
+        <FontAwesomeIcon icon={faFolderOpen} />
       </button>
       <button title="Clear Deck" className="clear-deck deckbutton" onClick={onClear} alt="Clear Deck">
         <FontAwesomeIcon icon={faNoteSticky} />
@@ -79,6 +81,9 @@ const DeckHeader = ({
       <button title="Export to Image" className="export-to-img deckbutton" onClick={onExport} alt="Export to Image">
         <FontAwesomeIcon icon={faImage} />
       </button>
+      <button title="Export to List" className="export-to-list deckbutton" onClick={onExportList} alt="Export to List">
+        <FontAwesomeIcon icon={faFileImport} />
+        </button> 
     </div>
   </div>
 );
