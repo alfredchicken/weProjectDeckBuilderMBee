@@ -257,7 +257,7 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-        user: 'alvena.grady57@ethereal.email',
+        user: 'alvena.grady57@ethereal.email', // wenn goLive, dann ersetzen und PW und User in env
         pass: 'vMWmsJNpFAexsrRyxu'
     }
 });
