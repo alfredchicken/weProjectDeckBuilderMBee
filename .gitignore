@@ -1,6 +1,8 @@
 Node_modules
 .env
 setlists
+loginsec
+tools
 
 # Logs
 logs

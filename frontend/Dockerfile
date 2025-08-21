@@ -1,4 +1,4 @@
-FROM node:22
+FROM node:21-alpine
 WORKDIR /app
 COPY frontend/package*.json ./
 RUN npm install
