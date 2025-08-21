@@ -13,13 +13,13 @@ services:
 
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: deckbuilder-backend
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      - ./backend:/app
       - /app/node_modules
     environment:
       - MONGO_URI=mongodb://bee:IwTLJS2025@mongodb:27017
