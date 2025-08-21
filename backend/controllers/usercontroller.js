@@ -262,7 +262,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-    const resetURL = `http://localhost:3000/reset-password/${token}`;
+    const resetURL = `http://localhost:5173/reset-password/${token}`;
     await transporter.sendMail({
       to: user.email,
       from: 'alvena.grady57@ethereal.email',
@@ -271,7 +271,7 @@ const transporter = nodemailer.createTransport({
     });
 
     res.status(200).json({ message: "Password reset email sent" });
-    console.log("Preview URL:", nodemailer.getTestMessageUrl(resetURL));
+    console.log("Preview URL:", resetURL);
   } catch (error) {
     console.error("Error in forgotPassword:", error);
     res.status(500).json({ message: "Server error" });
