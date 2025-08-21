@@ -1,7 +1,6 @@
 Node_modules
 .env
 setlists
-.dockerignore
 
 # Logs
 logs
