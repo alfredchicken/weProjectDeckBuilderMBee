@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fetch from "node-fetch";
 import userValidationSchema from "../models/uservalidation.js";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 export const getUser = async (req, res) => {
   try {
@@ -234,5 +236,69 @@ export const refreshAccessToken = (req, res) => {
     res.status(200).json({ message: "New access token issued" });
   } catch (err) {
     res.status(401).json({ message: "Invalid refresh token" });
+  }
+};
+
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = crypto.randomBytes(20).toString("hex");
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'alvena.grady57@ethereal.email',
+        pass: 'vMWmsJNpFAexsrRyxu'
+    }
+});
+
+    const resetURL = `http://localhost:3000/reset-password/${token}`;
+    await transporter.sendMail({
+      to: user.email,
+      from: 'alvena.grady57@ethereal.email',
+      subject: "Password Reset",
+      text: `You requested a password reset. Click here: ${resetURL}`,
+    });
+
+    res.status(200).json({ message: "Password reset email sent" });
+    console.log("Preview URL:", nodemailer.getTestMessageUrl(resetURL));
+  } catch (error) {
+    console.error("Error in forgotPassword:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { token, password } = req.body;
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error in resetPassword:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

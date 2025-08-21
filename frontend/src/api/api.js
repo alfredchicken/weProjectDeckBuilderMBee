@@ -89,4 +89,30 @@ export const loginUser = async (name, password) => {
   }
 };
 
+export const forgotPassword = async (email) => {
+  try {
+    const response = await api.post("/users/forgot-password", { email });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to request password reset"
+    );
+  }
+};
+
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await api.post("/users/reset-password", {
+      token,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to reset password"
+    );
+  }
+};
+
+
 export default api;

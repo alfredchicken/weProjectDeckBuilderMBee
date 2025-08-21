@@ -1,6 +1,15 @@
 import express from "express";
-import { createUser, deleteUser, getUser, loginUser, updateUser, logoutUser, refreshAccessToken } from "../controllers/usercontroller.js";
-import { protect } from "../middleware/userauthMiddleware.js";
+import {
+  createUser,
+  deleteUser,
+  getUser,
+  loginUser,
+  updateUser,
+  logoutUser,
+  refreshAccessToken,
+  forgotPassword,
+  resetPassword,
+} from "../controllers/usercontroller.js";import { protect } from "../middleware/userauthMiddleware.js";
 
 const router = express.Router();
 
@@ -15,5 +24,7 @@ router.put("/:name", updateUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/refresh", refreshAccessToken);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);  
 
 export default router;

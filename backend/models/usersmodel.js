@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema(
     role: { type: String, default: "user" },
     failedLoginAttempts: { type: Number, default: 0 },
     lockUntil: { type: Date },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   { timestamps: true }
 );

@@ -3,6 +3,8 @@ import Header from "./components/Navbar/Navbar";
 import LoginPage from "./pages/LoginPage";
 import DeckBuilder from "./pages/DeckBuilder";
 import MyAccount from "./pages/MyAccount";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -32,6 +34,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/my-account" element={<MyAccount />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </div>
       <Footer />

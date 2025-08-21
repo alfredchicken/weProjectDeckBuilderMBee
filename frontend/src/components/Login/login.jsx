@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -42,6 +42,9 @@ const Login = () => {
           <button type="submit" disabled={isSubmitting}>
             Login
           </button>
+          <Link to="/forgot-password" className="forgot-link">
+            Forgot Password?
+          </Link>
         </Form>
       )}
     </Formik>
