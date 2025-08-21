@@ -117,6 +117,7 @@
     "negotiator": "^0.6.3",
     "node-domexception": "^1.0.0",
     "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.5",
     "nodemon": "^3.1.9",
     "normalize-path": "^3.0.0",
     "object-assign": "^4.1.1",
