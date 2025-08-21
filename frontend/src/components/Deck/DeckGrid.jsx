@@ -3,6 +3,8 @@ import { toPng } from "html-to-image";
 import "./DeckGrid.css";
 import Spinner from "../Spinner/Spinner";
 
+const IMAGE_BASE = import.meta.env.VITE_URL;
+
 const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingIndex, onExportReady, sortedDeck, onAddCardToDeck }) => {
   const deckRef = useRef(null);
   const [loadingExport, setLoadingExport] = useState(false);
@@ -79,7 +81,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
               }, 300);
             }}
           >
-            <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="img-pool" style={{ width: "100%" }} />
+            <img src={`${IMAGE_BASE}/images/${card.imgURL}`} alt={card.name} className="img-pool" style={{ width: "100%" }} />
           </div>
         ))}
       </div>

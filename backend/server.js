@@ -34,7 +34,7 @@ app.use("/images", (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   next();
 });
-app.use("/images", express.static(path.join(process.cwd(), "backend", "public", "images")));
+app.use("/images", express.static(path.join(process.cwd(), "public", "images")));
 
 app.use(
   cors({

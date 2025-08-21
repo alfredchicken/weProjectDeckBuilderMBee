@@ -1,6 +1,8 @@
 import React from "react";
-import "./CardGrid.css/";
+import "./CardGrid.css";
 import Spinner from "../Spinner/Spinner";
+
+const IMAGE_BASE = import.meta.env.VITE_URL;
 
 const CardGrid = ({ cards, cardSize, onSelect, loading }) => {
   if (loading) return <Spinner />;
@@ -15,7 +17,7 @@ const CardGrid = ({ cards, cardSize, onSelect, loading }) => {
         onDragStart={(e) => {
       e.dataTransfer.setData("application/json", JSON.stringify(card));
     }}>
-          <img src={`http://localhost:5000/images/${card.imgURL}`} alt={card.name} className="img-pool" />
+          <img src={`${IMAGE_BASE}/images/${card.imgURL}`} alt={card.name} className="img-pool" />
         </div>
       ))}
     </div>
