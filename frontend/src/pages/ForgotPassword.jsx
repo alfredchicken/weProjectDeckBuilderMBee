@@ -11,6 +11,8 @@ const ForgotPasswordSchema = Yup.object().shape({
 });
 
 const ForgotPassword = () => (
+  <>
+  <div className="forgot-container">
   <Formik
     initialValues={{ email: "" }}
     validationSchema={ForgotPasswordSchema}
@@ -44,6 +46,8 @@ const ForgotPassword = () => (
       </Form>
     )}
   </Formik>
+  </div>
+</>
 );
 
 export default ForgotPassword;
