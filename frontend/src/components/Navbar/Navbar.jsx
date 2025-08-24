@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Logo from "../../assets/Logo_EverythingCardGame.webp";
 import "./Navbar.css";
 
 
@@ -11,7 +12,7 @@ const Header = () => {
       <nav>
         <div className="nav-left">
           <Link to="/">
-            <img className="logo" src="../../../src/assets/Logo_EverythingCardGame.webp" alt="Logo" />
+            <img className="logo" src={Logo} alt="Logo" />
           </Link>
           {user?.role === "admin" && <Link to="/admin">Manage Cards</Link>}
         </div>
