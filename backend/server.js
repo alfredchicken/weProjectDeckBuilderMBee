@@ -15,9 +15,13 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
+app.set("trust proxy", 1);
+
+const allowedOrigins = [process.env.CLIENT_URL, process.env.LOCAL_CLIENT_URL].filter(Boolean);
+
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   },
 });
@@ -31,14 +35,16 @@ io.on("connection", (socket) => {
 
 app.use(cookieParser());
 app.use("/images", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  next();
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }  next();
 });
 app.use("/images", express.static(path.join(process.cwd(), "public", "images")));
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );

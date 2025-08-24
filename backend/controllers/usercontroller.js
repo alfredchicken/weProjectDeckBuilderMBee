@@ -6,6 +6,9 @@ import userValidationSchema from "../models/uservalidation.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 
+  const isProduction = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
+
 export const getUser = async (req, res) => {
   try {
     const users = await User.find({});
@@ -184,14 +187,14 @@ export const loginUser = async (req, res) => {
     // Cookies
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: isProduction,
+      sameSite: isProduction ? "None" : "Lax",
       maxAge: 15 * 60 * 1000,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: isProduction,
+      sameSite: isProduction ? "None" : "Lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 Tage
     });
 
@@ -205,13 +208,13 @@ export const loginUser = async (req, res) => {
 export const logoutUser = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
+    secure: isProduction ? "None" : "Lax",
+    sameSite: "None",
   });
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
+    secure: isProduction ? "None" : "Lax",
+    sameSite: "None",
   });
   res.status(200).json({ message: "Erfolgreich ausgeloggt!" });
 };
@@ -229,8 +232,8 @@ export const refreshAccessToken = (req, res) => {
     const accessToken = jwt.sign({ userId: decoded.userId, name: decoded.name, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "15m" });
     res.cookie("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: isProduction,
+      sameSite: "None",
       maxAge: 15 * 60 * 1000,
     });
     res.status(200).json({ message: "New access token issued" });
