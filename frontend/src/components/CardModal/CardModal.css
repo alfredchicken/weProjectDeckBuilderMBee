@@ -87,7 +87,7 @@ ul {
 .ultra-overlay {
   position: absolute;
   inset: 0;
-  background: url("./images/ultrararity.gif");
+  background: url("/images/ultrararity.gif");
   background-size: cover;
   mix-blend-mode: screen;
   opacity: 0.3;
