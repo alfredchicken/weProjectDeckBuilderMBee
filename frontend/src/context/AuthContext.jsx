@@ -15,8 +15,6 @@ export const AuthProvider = ({ children }) => {
       if ((error.response && error.response.status === 401) || error.isAuthSessionExpired) {
         setUser(null);
       } else {
-        // Only log truly unexpected errors
-        // console.error("Auth check failed:", error);
         setUser(null);
       }
     }

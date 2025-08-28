@@ -37,7 +37,7 @@ const DeckGrid = ({ deck, cardDeckSize, onRemove, removingIndex, setRemovingInde
           link.click();
         })
         .catch((err) => {
-          console.error("Fehler beim Exportieren:", err);
+          console.error("Error while exporting Deck:", err);
         })
         .finally(() => {
           node.style.overflow = originalOverflow;

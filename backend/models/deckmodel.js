@@ -19,7 +19,7 @@ const deckSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // Zeitsempel
+    timestamps: true, 
   }
 );
 

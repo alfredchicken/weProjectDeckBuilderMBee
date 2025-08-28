@@ -19,7 +19,7 @@ const CardModal = ({ card, onClose, onAddToDeck, deck }) => {
       "max-glare": 0.2,
     });
 
-    // Optional: destroy on cleanup
+    // Destroy on cleanup
     return () => {
       if (tiltRef.current?.vanillaTilt) {
         tiltRef.current.vanillaTilt.destroy();
