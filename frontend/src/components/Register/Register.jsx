@@ -63,8 +63,7 @@ const Register = () => {
           <Field type="password" name="password" placeholder="Password" />
           <ErrorMessage name="password" component="div" style={{ color: "white", backgroundColor: "#ff512f", borderRadius: "8px", paddingLeft: "8px" }} />
 
-          <ReCaptcha sitekey="6LcDnVorAAAAAH1HhlCzOd1hwB0OnJ7s2CwkOrv1" ref={recaptchaRef} />
-
+          <ReCaptcha sitekey="6Lezk70rAAAAAAkZl9Y4tLYdWxJW__XE6y1DGvrR" ref={recaptchaRef} /> {/* Render SiteKey. Localhost site key is: 6LcDnVorAAAAAH1HhlCzOd1hwB0OnJ7s2CwkOrv1*/}
           <button type="submit" disabled={isSubmitting}>
             Register
           </button>
